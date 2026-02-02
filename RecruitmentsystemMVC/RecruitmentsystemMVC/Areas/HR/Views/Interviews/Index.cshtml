@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Interviews";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Scheduled Interviews</h3>
+            <p class="text-muted small">Monitor upcoming candidate evaluations and technical rounds.</p>
+        </div>
+        <button class="btn btn-outline-success rounded-pill px-4">
+            <i class="bi bi-calendar-plus me-2"></i> Schedule Meeting
+        </button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-4 text-center">
+                <div class="mx-auto bg-success bg-opacity-10 p-3 rounded-circle mb-3" style="width: 60px;">
+                    <i class="bi bi-camera-video fs-3 text-success"></i>
+                </div>
+                <h6 class="fw-bold mb-1">Technical Interview</h6>
+                <p class="text-muted small mb-3">Today at 2:00 PM</p>
+                <div class="bg-light p-3 rounded-3 mb-3">
+                    <div class="fw-bold">Alex Rivera</div>
+                    <small class="text-muted">Software Engineer Role</small>
+                </div>
+                <button class="btn btn-success w-100 rounded-pill">Join Meeting</button>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card border-0 shadow-sm p-4 text-center">
+                <div class="mx-auto bg-primary bg-opacity-10 p-3 rounded-circle mb-3" style="width: 60px;">
+                    <i class="bi bi-people fs-3 text-primary"></i>
+                </div>
+                <h6 class="fw-bold mb-1">Culture Fit Round</h6>
+                <p class="text-muted small mb-3">Tomorrow at 10:30 AM</p>
+                <div class="bg-light p-3 rounded-3 mb-3">
+                    <div class="fw-bold">Sarah Chen</div>
+                    <small class="text-muted">Marketing Specialist</small>
+                </div>
+                <button class="btn btn-outline-primary w-100 rounded-pill">Reschedule</button>
+            </div>
+        </div>
+    </div>
+</div>

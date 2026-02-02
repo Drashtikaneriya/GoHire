@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentsystemAPI.Data;
-using RecruitmentsystemAPI.Models;
-using static Application;
 using RecruitmentsystemAPI.DTO;
 using RecruitmentsystemAPI.DTOs.Application;
+using RecruitmentsystemAPI.Models;
+using static Application;
 
 namespace RecruitmentsystemAPI.Controllers
 {
@@ -20,6 +21,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // GET: api/applications
+        [Authorize(Roles = "Admin,HR")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -39,6 +41,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // GET: api/applications/5
+        [Authorize(Roles = "Admin,HR,Candidate")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -61,6 +64,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // POST: api/applications
+        [Authorize(Roles = "Candidate")]
         [HttpPost]
         public async Task<IActionResult> Create(ApplicationCreateDTO dto)
         {
@@ -88,6 +92,7 @@ namespace RecruitmentsystemAPI.Controllers
 
 
         // PUT: api/applications/5
+        [Authorize(Roles = "HR")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Application application)
         {
@@ -114,6 +119,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // DELETE: api/applications/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

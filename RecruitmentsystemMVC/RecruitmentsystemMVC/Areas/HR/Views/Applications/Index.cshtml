@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Applications";
+}
+
+<div class="container-fluid">
+    <div class="mb-4">
+        <h3 class="fw-bold mb-0">Incoming Applications</h3>
+        <p class="text-muted small">Review and filter candidate submissions for all open positions.</p>
+    </div>
+
+    <div class="card bg-white border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Candidate</th>
+                            <th>Applied Position</th>
+                            <th>Experience</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold">Michael Scott</div>
+                                <div class="text-muted small">michael.s@gmail.com</div>
+                            </td>
+                            <td>Senior .NET Developer</td>
+                            <td>8 Years</td>
+                            <td><span class="text-success fw-bold">92%</span></td>
+                            <td><span class="badge bg-primary bg-opacity-10 text-primary">In Review</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-success me-2 px-3 rounded-pill">Schedule</button>
+                                <button class="btn btn-sm btn-light text-danger"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold">Pam Beesly</div>
+                                <div class="text-muted small">pam.b@gmail.com</div>
+                            </td>
+                            <td>UI/UX Designer</td>
+                            <td>4 Years</td>
+                            <td><span class="text-info fw-bold">85%</span></td>
+                            <td><span class="badge bg-warning bg-opacity-10 text-warning">New</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-success me-2 px-3 rounded-pill">Schedule</button>
+                                <button class="btn btn-sm btn-light text-danger"><i class="bi bi-x-circle"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

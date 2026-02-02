@@ -11,5 +11,9 @@ namespace RecruitmentsystemAPI.DTOs.Candidate
         public string? Phone { get; set; }
 
         public string? ResumePath { get; set; }
+
+
+        public IFormFile? DocumentFile { get; set; } // For new file
+
     }
 }

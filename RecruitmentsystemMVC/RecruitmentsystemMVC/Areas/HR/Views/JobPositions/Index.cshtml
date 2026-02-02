@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Job Positions";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Your Job Postings</h3>
+            <p class="text-muted small">Manage and track your active recruitment listings.</p>
+        </div>
+        <button class="btn btn-success rounded-pill px-4">
+            <i class="bi bi-briefcase me-2"></i> Create Job Posting
+        </button>
+    </div>
+
+    <div class="card bg-white border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Position Name</th>
+                            <th>Department</th>
+                            <th>Applications</th>
+                            <th>Status</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">
+                                <span class="fw-bold">Senior .NET Developer</span>
+                                <div class="text-muted small">Posted 2 days ago</div>
+                            </td>
+                            <td>Engineering</td>
+                            <td><span class="badge bg-secondary rounded-pill">14</span></td>
+                            <td><span class="badge bg-success bg-opacity-10 text-success">Active</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
+                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">
+                                <span class="fw-bold">UI/UX Designer</span>
+                                <div class="text-muted small">Posted 5 days ago</div>
+                            </td>
+                            <td>Product Design</td>
+                            <td><span class="badge bg-secondary rounded-pill">8</span></td>
+                            <td><span class="badge bg-success bg-opacity-10 text-success">Active</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
+                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4">
+                                <span class="fw-bold">Marketing Lead</span>
+                                <div class="text-muted small">Draft created yesterday</div>
+                            </td>
+                            <td>Marketing</td>
+                            <td><span class="badge bg-secondary rounded-pill">0</span></td>
+                            <td><span class="badge bg-warning bg-opacity-10 text-warning">Draft</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
+                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

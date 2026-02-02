@@ -11,5 +11,7 @@
         public string? Phone { get; set; }
 
         public string? ResumePath { get; set; }
+        // For updated file
+        public IFormFile? documentFile { get; set; }
     }
 }

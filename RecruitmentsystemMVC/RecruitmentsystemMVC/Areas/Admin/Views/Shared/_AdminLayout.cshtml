@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Portal</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        :root {
+            --admin-primary: #0d6efd;
+            --admin-secondary: #f8f9fa;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #fff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        #content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-link {
+            color: #495057;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+            border-radius: 8px;
+            margin: 4px 12px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--admin-primary);
+            color: #fff !important;
+        }
+
+        .navbar {
+            background: #fff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            margin-left: var(--sidebar-width);
+            z-index: 999;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-card {
+            border-left: 4px solid var(--admin-primary);
+        }
+
+        .user-profile-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--admin-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        @@media (max-width: 768px) {
+            #sidebar { margin-left: calc(-1 * var(--sidebar-width)); }
+            #content, .navbar { margin-left: 0; }
+            #sidebar.active { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <div class="p-4 border-bottom">
+            <h4 class="text-primary fw-bold mb-0">GoHire <span class="text-dark">Admin</span></h4>
+        </div>
+        <div class="py-3">
+            <a href="/Admin/Dashboard" class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+            <a href="/Admin/Users" class="nav-link">
+                <i class="bi bi-people"></i> Users
+            </a>
+            <a href="/Admin/Roles" class="nav-link">
+                <i class="bi bi-shield-check"></i> Roles
+            </a>
+            <a href="/Admin/Companies" class="nav-link">
+                <i class="bi bi-building"></i> Companies
+            </a>
+            <a href="/Admin/JobPositions" class="nav-link">
+                <i class="bi bi-briefcase"></i> Job Positions
+            </a>
+            <a href="/Admin/Reports" class="nav-link">
+                <i class="bi bi-graph-up"></i> Reports
+            </a>
+            <hr class="mx-3 my-2">
+            <a href="/Account/Logout" class="nav-link text-danger">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-light d-md-none">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <div class="text-end d-none d-sm-block">
+                    <small class="text-muted d-block">Welcome back,</small>
+                    <span class="fw-bold">@Context.Session.GetString("UserName")</span>
+                </div>
+                <div class="user-profile-img">
+                    @(Context.Session.GetString("UserName")?.Substring(0, 1).ToUpper() ?? "A")
+                </div>
+                <a href="/Account/Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 mt-1">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content" style="margin-top: 70px;">
+        @RenderBody()
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

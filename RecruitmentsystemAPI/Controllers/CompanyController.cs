@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentsystemAPI.Data;
 using RecruitmentsystemAPI.DTOs.Company;
@@ -18,6 +19,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= GET ALL =================
+        [Authorize(Roles = "Admin,HR")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -40,6 +42,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= GET BY ID =================
+        [Authorize(Roles = "Admin,HR")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -66,6 +69,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= CREATE =================
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CompanyCreateDTO dto)
         {
@@ -94,6 +98,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= UPDATE =================
+        [Authorize(Roles = "Admin,HR")]
         [HttpPut]
         public async Task<IActionResult> Update(CompanyUpdateDTO dto)
         {
@@ -118,6 +123,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= SOFT DELETE =================
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

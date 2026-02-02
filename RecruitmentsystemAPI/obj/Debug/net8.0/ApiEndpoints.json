@@ -79,6 +79,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AuthController",
+    "Method": "Login",
+    "RelativePath": "api/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "RecruitmentsystemAPI.DTO.Auth.LoginRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "RecruitmentsystemAPI.Controllers.CandidatesController",
     "Method": "GetAll",
     "RelativePath": "api/Candidates",
@@ -97,9 +113,29 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "RecruitmentsystemAPI.DTOs.Candidate.CandidateCreateDTO",
-        "IsRequired": true
+        "Name": "FullName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ResumePath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "DocumentFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -113,9 +149,34 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "RecruitmentsystemAPI.DTOs.Candidate.CandidateUpdateDTO",
-        "IsRequired": true
+        "Name": "CandidateId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "FullName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ResumePath",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "documentFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentsystemAPI.Data;
-using RecruitmentsystemAPI.DTOs;
-using YourProjectName.Models;
 using RecruitmentsystemAPI.DTO;
 using RecruitmentsystemAPI.DTO.Role;
+using RecruitmentsystemAPI.DTOs;
+using YourProjectName.Models;
 namespace RecruitmentsystemAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -19,6 +20,8 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== GET ALL =====================
+        [Authorize(Roles = "Admin")]
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -43,6 +46,8 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== GET BY ID =====================
+        [Authorize(Roles = "Admin")]
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -71,6 +76,8 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== CREATE =====================
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         public async Task<IActionResult> Create(RoleCreateDTO dto)
         {
@@ -106,6 +113,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== UPDATE =====================
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, RoleUpdateDTO dto)
         {
@@ -140,6 +148,8 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== DELETE =====================
+        [Authorize(Roles = "Admin")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

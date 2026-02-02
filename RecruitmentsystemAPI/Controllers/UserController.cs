@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RecruitmentsystemAPI.Data;
-using RecruitmentsystemAPI.Models;
 using RecruitmentsystemAPI.DTOs;
+using RecruitmentsystemAPI.Models;
 
 namespace RecruitmentsystemAPI.Controllers
 {
@@ -18,18 +19,23 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== GET ALL =====================
+        [Authorize(Roles = "Admin")]
+
         [HttpGet]
+       
         public async Task<IActionResult> GetAll()
         {
             try
             {
                 var users = await _db.Users
+                    .Include(u => u.Role) // ✅ JOIN Role table
                     .Select(u => new UserResponseDTO
                     {
                         UserId = u.UserId,
                         UserName = u.UserName,
                         Email = u.Email,
                         RoleId = u.RoleId,
+                        RoleName = u.Role != null ? u.Role.RoleName : "", // ✅
                         CreatedDate = u.CreatedDate,
                         ModifiedDate = u.ModifiedDate
                     })
@@ -44,6 +50,8 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== GET BY ID =====================
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -74,6 +82,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== CREATE =====================
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(UserCreateDTO dto)
         {
@@ -112,6 +121,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== UPDATE =====================
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UserUpdateDTO dto)
         {
@@ -150,6 +160,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ===================== DELETE =====================
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

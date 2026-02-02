@@ -130,6 +130,37 @@
         }
       }
     },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Candidates": {
       "get": {
         "tags": [
@@ -147,19 +178,44 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CandidateCreateDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidateCreateDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidateCreateDTO"
+                "type": "object",
+                "properties": {
+                  "FullName": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "Phone": {
+                    "type": "string"
+                  },
+                  "ResumePath": {
+                    "type": "string"
+                  },
+                  "DocumentFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "FullName": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "Phone": {
+                  "style": "form"
+                },
+                "ResumePath": {
+                  "style": "form"
+                },
+                "DocumentFile": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -176,19 +232,51 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CandidateUpdateDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidateUpdateDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidateUpdateDTO"
+                "type": "object",
+                "properties": {
+                  "CandidateId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FullName": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "Phone": {
+                    "type": "string"
+                  },
+                  "ResumePath": {
+                    "type": "string"
+                  },
+                  "documentFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "CandidateId": {
+                  "style": "form"
+                },
+                "FullName": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "Phone": {
+                  "style": "form"
+                },
+                "ResumePath": {
+                  "style": "form"
+                },
+                "documentFile": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -956,54 +1044,6 @@
         },
         "additionalProperties": false
       },
-      "CandidateCreateDTO": {
-        "type": "object",
-        "properties": {
-          "fullName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "resumePath": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CandidateUpdateDTO": {
-        "type": "object",
-        "properties": {
-          "candidateId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fullName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "resumePath": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CompanyCreateDTO": {
         "type": "object",
         "properties": {
@@ -1247,6 +1287,20 @@
         },
         "additionalProperties": false
       },
+      "LoginRequestDTO": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Role": {
         "required": [
           "roleName"
@@ -1387,6 +1441,10 @@
           "roleId": {
             "type": "integer",
             "format": "int32"
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1423,10 +1481,27 @@
           "roleId": {
             "type": "integer",
             "format": "int32"
+          },
+          "roleName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Enter 'Bearer {token}'",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

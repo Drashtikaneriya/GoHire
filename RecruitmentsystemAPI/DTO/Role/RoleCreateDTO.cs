@@ -9,3 +9,4 @@ namespace RecruitmentsystemAPI.DTO.Role
         public string RoleName { get; set; } = string.Empty;
     }
 }
+    

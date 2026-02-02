@@ -19,5 +19,6 @@ namespace RecruitmentsystemAPI.DTOs
 
         [Required(ErrorMessage = "RoleId is required")]
         public int RoleId { get; set; }
+        public string RoleName { get; set; } = string.Empty; // ✅ NEW
     }
 }
