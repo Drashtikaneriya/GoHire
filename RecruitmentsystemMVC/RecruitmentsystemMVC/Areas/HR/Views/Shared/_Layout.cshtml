@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HR Portal | GoHire</title>
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Frameworks & Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --primary-gradient: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            --sidebar-bg: #1a1c2e;
+            --content-bg: #f8f9fc;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--content-bg);
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Styling */
+        #wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            transition: margin .25s ease-out;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            min-height: 100vh;
+        }
+
+        .sidebar-heading {
+            padding: 2rem 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .list-group-item {
+            background: transparent !important;
+            border: none !important;
+            padding: 0.8rem 1.5rem;
+            color: rgba(255,255,255,0.7) !important;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            border-radius: 12px !important;
+            margin: 0.2rem 1rem;
+        }
+
+        .list-group-item i {
+            font-size: 1.25rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .list-group-item:hover {
+            color: #fff !important;
+            background: rgba(255,255,255,0.05) !important;
+            transform: translateX(5px);
+        }
+
+        .list-group-item.active {
+            background: var(--primary-gradient) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
+        }
+
+        /* Navbar Styling */
+        .navbar-custom {
+            background: #fff;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            padding: 0.75rem 1.5rem;
+        }
+
+        /* Utility Cards & Elements */
+        .card-shadow {
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1) !important;
+        }
+
+        .header-gradient {
+            background: var(--primary-gradient);
+            padding: 3rem 2rem;
+            color: #fff;
+            margin-bottom: -2rem;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .btn-rounded { border-radius: 50px; }
+        
+        .badge-soft {
+            padding: 0.5em 1em;
+            font-weight: 600;
+            border-radius: 30px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #999; }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading d-flex align-items-center">
+                <div class="bg-primary p-2 rounded-3 me-2">
+                    <i class="bi bi-rocket-takeoff-fill text-white m-0"></i>
+                </div>
+                GoHire HR
+            </div>
+            
+            <div class="list-group list-group-flush mt-3">
+                @{
+                    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                }
+                
+                <a href="/HR/Dashboard" class="list-group-item @(currentController == "Dashboard" ? "active" : "")">
+                    <i class="bi bi-grid-1x2-fill"></i> Analytics
+                </a>
+                
+                <div class="sidebar-label px-4 mt-4 mb-2 text-uppercase small fw-bold text-white-50" style="font-size: 0.7rem; letter-spacing: 1.5px;">Recruitment</div>
+                
+                <a href="/HR/JobPositions" class="list-group-item @(currentController == "JobPositions" ? "active" : "")">
+                    <i class="bi bi-briefcase-fill"></i> Job Positions
+                </a>
+                
+                <a href="/HR/Candidates" class="list-group-item @(currentController == "Candidates" ? "active" : "")">
+                    <i class="bi bi-people-fill"></i> Candidates
+                </a>
+                
+                <a href="/HR/Applications" class="list-group-item @(currentController == "Applications" ? "active" : "")">
+                    <i class="bi bi-file-earmark-person-fill"></i> Applications
+                </a>
+                
+                <a href="/HR/Interviews" class="list-group-item @(currentController == "Interviews" ? "active" : "")">
+                    <i class="bi bi-calendar-check-fill"></i> Interviews
+                </a>
+
+                <div class="sidebar-label px-4 mt-4 mb-2 text-uppercase small fw-bold text-white-50" style="font-size: 0.7rem; letter-spacing: 1.5px;">Account</div>
+                
+                <a href="/HR/Profile" class="list-group-item">
+                    <i class="bi bi-person-circle"></i> My Profile
+                </a>
+                
+                <a href="/Account/Logout" class="list-group-item text-danger">
+                    <i class="bi bi-box-arrow-right"></i> Sign Out
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+                <div class="container-fluid">
+                    <button class="btn btn-light bg-white border shadow-sm rounded-circle me-3" id="menu-toggle">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-light position-relative rounded-pill shadow-sm" type="button">
+                                <i class="bi bi-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3+
+                                </span>
+                            </button>
+                        </div>
+                        <div class="d-flex align-items-center border-start ps-3 ms-2">
+                            <div class="text-end me-3 d-none d-sm-block">
+                                <p class="mb-0 small fw-bold text-dark">@Context.Session.GetString("UserName")</p>
+                                <p class="mb-0 text-muted" style="font-size: 0.7rem;">HR Manager</p>
+                            </div>
+                            <img src="https://ui-avatars.com/api/?name=@Context.Session.GetString("UserName")&background=4e73df&color=fff" class="rounded-circle shadow-sm" width="40" alt="Avatar">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4 animate__animated animate__fadeIn">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#sidebar-wrapper").toggle();
+                if($("#sidebar-wrapper").is(":visible")) {
+                    $("#page-content-wrapper").css("margin-left", "var(--sidebar-width)");
+                    $("#page-content-wrapper").css("width", "calc(100% - var(--sidebar-width))");
+                } else {
+                    $("#page-content-wrapper").css("margin-left", "0");
+                    $("#page-content-wrapper").css("width", "100%");
+                }
+            });
+
+            // Toastr global config
+            toastr.options = { 
+                "closeButton": true, 
+                "progressBar": true, 
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+
+            @if (TempData["Success"] != null)
+            {
+                <text>toastr.success('@TempData["Success"]');</text>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <text>toastr.error('@TempData["Error"]');</text>
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

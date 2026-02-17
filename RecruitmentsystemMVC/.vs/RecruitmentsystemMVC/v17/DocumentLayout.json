@@ -3,6 +3,109 @@
   "WorkspaceRootPath": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\controllers\\companiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\controllers\\companiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\controllers\\jobpositionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\controllers\\jobpositionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\controllers\\jobpositionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\controllers\\jobpositionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\controllers\\interviewscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\controllers\\interviewscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\controllers\\applicationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\controllers\\applicationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\controllers\\basehrcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\controllers\\basehrcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\views\\applications\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\views\\applications\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\views\\applications\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\views\\applications\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\models\\applicationmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\models\\applicationmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\hr\\views\\candidates\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\hr\\views\\candidates\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\views\\companies\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\views\\companies\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\views\\roles\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\views\\roles\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\services\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\services\\iapiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\areas\\admin\\views\\roles\\upsert.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\areas\\admin\\views\\roles\\upsert.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\models\\rolemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\models\\rolemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\models\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\models\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\models\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\models\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|d:\\github\\gohire\\recruitmentsystemmvc\\recruitmentsystemmvc\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{650C6E1A-FE3A-41C7-906A-00C19AEF1740}|RecruitmentsystemMVC\\RecruitmentsystemMVC.csproj|solutionrelative:recruitmentsystemmvc\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,6 +126,319 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAAAYVAAAAAAAAAADgvxMVAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-02-17T13:12:01.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\DashboardController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAA1wAcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-15T06:28:37.315Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CompaniesController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\CompaniesController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\CompaniesController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\CompaniesController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\CompaniesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-15T06:21:10.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "InterviewsController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\InterviewsController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\InterviewsController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\InterviewsController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\InterviewsController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAzwDUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-15T06:19:36.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Edit.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Edit.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Edit.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-05T05:47:56.219Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ApplicationModel.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\ApplicationModel.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Models\\ApplicationModel.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\ApplicationModel.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Models\\ApplicationModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T05:44:46.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApplicationsController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\ApplicationsController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\ApplicationsController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\ApplicationsController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\ApplicationsController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAkwC0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T05:44:03.995Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Program.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Program.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Program.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T02:43:05.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-16T13:23:41.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "JobPositionsController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\JobPositionsController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\JobPositionsController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\JobPositionsController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\JobPositionsController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAowEQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:36:50.588Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T02:49:08.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Index.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Index.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Index.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Applications\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-05T05:48:06.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BaseHRController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\BaseHRController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\BaseHRController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\BaseHRController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\BaseHRController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAQwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T05:52:17.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "JobPositionsController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\JobPositionsController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\JobPositionsController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Controllers\\JobPositionsController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Controllers\\JobPositionsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-05T05:10:38.216Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Candidates\\Index.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Candidates\\Index.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\HR\\Views\\Candidates\\Index.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\HR\\Views\\Candidates\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-05T04:59:47.825Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Index.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Index.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Index.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Index.cshtml",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAkwLsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-04T02:52:58.167Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\RolesController.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:40:36.538Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\appsettings.json",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\appsettings.json",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\appsettings.json",
+              "RelativeToolTip": "RecruitmentsystemMVC\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-02-04T02:50:55.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RoleModel.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\RoleModel.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Models\\RoleModel.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\RoleModel.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Models\\RoleModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-04T02:41:11.907Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Services\\ApiService.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Services\\ApiService.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Services\\ApiService.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Services\\ApiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:29:36.056Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "IApiService.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Services\\IApiService.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Services\\IApiService.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Services\\IApiService.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Services\\IApiService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:31:42.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Companies\\Index.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Companies\\Index.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Companies\\Index.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Companies\\Index.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-04T03:06:24.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Upsert.cshtml",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Upsert.cshtml",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Upsert.cshtml",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Upsert.cshtml",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Areas\\Admin\\Views\\Roles\\Upsert.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-04T03:05:01.996Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Models\\LoginViewModel.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:31:48.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "LoginRequestDTO.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginRequestDTO.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Models\\LoginRequestDTO.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginRequestDTO.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Models\\LoginRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:31:46.975Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "LoginResponseDTO.cs",
+              "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginResponseDTO.cs",
+              "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Models\\LoginResponseDTO.cs",
+              "ToolTip": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Models\\LoginResponseDTO.cs",
+              "RelativeToolTip": "RecruitmentsystemMVC\\Models\\LoginResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T16:31:44.578Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Controllers\\AccountController.cs",
@@ -30,12 +446,11 @@
               "RelativeToolTip": "RecruitmentsystemMVC\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T13:49:16.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-02T13:49:16.429Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 27,
               "Title": "Login.cshtml",
               "DocumentMoniker": "D:\\Github\\GoHire\\RecruitmentsystemMVC\\RecruitmentsystemMVC\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "RecruitmentsystemMVC\\Views\\Account\\Login.cshtml",
@@ -43,8 +458,7 @@
               "RelativeToolTip": "RecruitmentsystemMVC\\Views\\Account\\Login.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAowFMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-02-02T13:48:41.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-02T13:48:41.601Z"
             }
           ]
         }

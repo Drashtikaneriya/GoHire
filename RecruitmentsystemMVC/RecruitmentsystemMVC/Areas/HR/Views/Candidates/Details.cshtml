@@ -1,0 +1,148 @@
+@model RecruitmentsystemMVC.Models.DTOs.CandidateDTO
+
+@{
+    ViewData["Title"] = Model.FullName + " - Candidate Profile";
+}
+
+<div class="header-gradient shadow-sm animate__animated animate__fadeIn">
+    <div class="row align-items-center">
+        <div class="col-md-8 text-center text-md-start">
+            <h1 class="display-6 fw-bold mb-1">Candidate Profile</h1>
+            <p class="lead opacity-75 mb-0">Review detailed information and expertise of the potential hire.</p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0 d-flex justify-content-center justify-content-md-end">
+            <a asp-action="Index" class="btn btn-white btn-rounded shadow-sm px-4 fw-bold me-2">
+                <i class="bi bi-arrow-left me-2"></i>Back
+            </a>
+            <button class="btn btn-light bg-opacity-25 text-white border-white border-opacity-25 rounded-pill px-4 fw-bold shadow-sm">
+                <i class="bi bi-printer-fill me-2"></i>Export
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-n5">
+    <div class="row g-4 justify-content-center">
+        <!-- Sidebar: Basic Info -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 animate__animated animate__fadeInLeft">
+                <div class="card-body p-5 text-center">
+                    <div class="position-relative d-inline-block mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@Model.FullName&background=random&color=fff&size=200" 
+                             class="rounded-circle shadow-lg border border-5 border-white" width="160" alt="Profile">
+                        <span class="position-absolute bottom-0 end-0 bg-success border border-4 border-white rounded-circle p-2 shadow-sm" style="width: 25px; height: 25px;"></span>
+                    </div>
+                    <h2 class="fw-bold text-dark mb-1">@Model.FullName</h2>
+                    <p class="text-primary fw-semibold text-uppercase small ls-1 mb-4">Senior Talent</p>
+                    
+                    <div class="d-flex justify-content-center gap-2 mb-4">
+                        <a href="mailto:@Model.Email" class="btn btn-icon btn-light rounded-circle text-primary shadow-sm">
+                            <i class="bi bi-envelope-fill"></i>
+                        </a>
+                        <a href="tel:@Model.Phone" class="btn btn-icon btn-light rounded-circle text-success shadow-sm">
+                            <i class="bi bi-telephone-fill"></i>
+                        </a>
+                        @if(!string.IsNullOrEmpty(Model.ResumeUrl)) {
+                            <a href="@Model.ResumeUrl" target="_blank" class="btn btn-icon btn-light rounded-circle text-danger shadow-sm">
+                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                            </a>
+                        }
+                    </div>
+
+                    <hr class="my-4 opacity-5">
+
+                    <div class="text-start">
+                        <div class="mb-4">
+                            <label class="text-muted small text-uppercase fw-bold ls-1 mb-2">Professional Summary</label>
+                            <p class="text-dark small leading-relaxed">
+                                A highly motivated professional with extensive experience in @(string.IsNullOrEmpty(Model.Skills) ? "relevant fields" : Model.Skills.Split(',')[0]). 
+                                Proven track record of delivering high-quality results and collaborating effectively in team environments.
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="text-muted small text-uppercase fw-bold ls-1 mb-2">Contact Details</label>
+                            <div class="d-flex align-items-center mb-2 small text-dark">
+                                <i class="bi bi-envelope-at text-muted me-3"></i> @Model.Email
+                            </div>
+                            <div class="d-flex align-items-center small text-dark">
+                                <i class="bi bi-phone-vibrate text-muted me-3"></i> @(Model.Phone ?? "Not Provided")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content: Detailed Experience & Skills -->
+        <div class="col-xl-6 col-lg-7">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden animate__animated animate__fadeInRight mb-4">
+                <div class="card-header bg-white border-0 py-4 px-5 d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-stars text-primary fs-5"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Core Competencies & Skills</h5>
+                </div>
+                <div class="card-body p-5 pt-2">
+                    <div class="d-flex flex-wrap gap-2">
+                        @if (!string.IsNullOrEmpty(Model.Skills))
+                        {
+                            @foreach (var skill in Model.Skills.Split(','))
+                            {
+                                <div class="bg-light border border-dark border-opacity-10 px-4 py-2 rounded-pill d-flex align-items-center shadow-sm">
+                                    <i class="bi bi-patch-check-fill text-primary me-2"></i>
+                                    <span class="fw-medium text-dark">@skill.Trim()</span>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted italic">No specific skills listed.</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden animate__animated animate__fadeInRight animate__delay-1s">
+                <div class="card-header bg-white border-0 py-4 px-5 d-flex align-items-center">
+                    <div class="bg-success bg-opacity-10 p-2 rounded-3 me-3">
+                        <i class="bi bi-briefcase-fill text-success fs-5"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Professional Experience</h5>
+                </div>
+                <div class="card-body p-5 pt-2 text-dark">
+                    <div class="position-relative ps-4 border-start border-2 border-light py-4">
+                        <div class="position-absolute translate-middle-x" style="left: -1px; top: 0;">
+                            <div class="bg-success rounded-circle shadow-sm" style="width: 12px; height: 12px; border: 3px solid #fff;"></div>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-dark mb-1">Expert Experience Level</h6>
+                            <p class="text-primary fw-bold small mb-2 text-uppercase">Duration: @(Model.Experience ?? "N/A")</p>
+                            <p class="text-muted leading-relaxed">
+                                Demonstrated expertise in high-level @(string.IsNullOrEmpty(Model.Skills) ? "professional" : Model.Skills.Split(',').Last()) operations. 
+                                Consistently achieved performance targets and contributed to organizational growth through innovative problem-solving and strategic execution.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <button class="btn btn-outline-primary rounded-pill px-5 py-2 fw-bold shadow-sm animate__animated animate__pulse animate__infinite animate__slow">
+                    <i class="bi bi-send-plus-fill me-2"></i>Invite for Interview
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mt-n5 { margin-top: -3.5rem !important; }
+    .btn-white { background: #fff; color: var(--sidebar-bg); border: none; }
+    .btn-white:hover { background: #f8f9fa; color: #000; }
+    .ls-1 { letter-spacing: 1px; }
+    .leading-relaxed { line-height: 1.7; }
+    .btn-icon { width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.25rem; transition: transform 0.2s; }
+    .btn-icon:hover { transform: scale(1.15); }
+    .bg-light { background-color: #f3f6f9 !important; }
+</style>

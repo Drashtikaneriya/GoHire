@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/Admin/Views/Roles/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUm9sZXNcVXBzZXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/Admin/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,8 +80,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2FuZGlkYXRlXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Applications/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcQXBwbGljYXRpb25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Applications/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcQXBwbGljYXRpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Candidates/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcQ2FuZGlkYXRlc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Candidates/Index.cshtml]
@@ -92,12 +104,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSW50ZXJ2aWV3c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Interviews/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSW50ZXJ2aWV3c1xVcHNlcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/JobPositions/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSm9iUG9zaXRpb25zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/JobPositions/JobAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSm9iUG9zaXRpb25zXEpvYkFkZEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/JobPositions/JobList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSm9iUG9zaXRpb25zXEpvYkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/JobPositions/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcSm9iUG9zaXRpb25zXFVwc2VydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Shared/_HRLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcU2hhcmVkXF9IUkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSFJcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Github/GoHire/RecruitmentsystemMVC/RecruitmentsystemMVC/Areas/HR/Views/_ViewStart.cshtml]

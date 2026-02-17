@@ -93,7 +93,15 @@ namespace RecruitmentsystemMVC.Controllers
 
         public IActionResult Logout()
         {
+            // 1. Clear Session
             HttpContext.Session.Clear();
+
+            // 2. Prevent Caching of this response (optional but good practice)
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            // 3. Redirect to Login
             return RedirectToAction("Login");
         }
     }

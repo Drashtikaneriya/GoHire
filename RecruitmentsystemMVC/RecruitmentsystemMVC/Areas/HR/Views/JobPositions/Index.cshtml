@@ -3,72 +3,199 @@
 }
 
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Gradient Header Section -->
+    <div class="header-gradient d-flex justify-content-between align-items-center mb-5">
         <div>
-            <h3 class="fw-bold mb-0">Your Job Postings</h3>
-            <p class="text-muted small">Manage and track your active recruitment listings.</p>
+            <h2 class="fw-bold mb-1"><i class="bi bi-briefcase me-2"></i>Job Positions</h2>
+            <p class="mb-0 opacity-75">Manage your organization's open roles and requirements</p>
         </div>
-        <button class="btn btn-success rounded-pill px-4">
-            <i class="bi bi-briefcase me-2"></i> Create Job Posting
-        </button>
+        <div>
+            <a asp-action="Upsert" class="btn btn-light rounded-pill px-4 py-2 fw-bold text-primary shadow-lg">
+                <i class="bi bi-plus-lg me-2"></i>Create New Job
+            </a>
+        </div>
     </div>
 
-    <div class="card bg-white border-0 shadow-sm">
+    <!-- Glass Card Table Container -->
+    <div class="card card-glass mb-4">
+        <div class="card-header-gradient d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold text-dark">Active Listings</h5>
+            <div class="text-muted small"><i class="bi bi-clock me-1"></i> Real-time data</div>
+        </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                <table id="tblData" class="table table-hover table-premium align-middle mb-0" width="100%">
+                    <thead>
                         <tr>
-                            <th class="ps-4">Position Name</th>
-                            <th>Department</th>
-                            <th>Applications</th>
-                            <th>Status</th>
-                            <th class="text-end pe-4">Actions</th>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Salary Range</th>
+                            <th class="text-center">Quick Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="ps-4">
-                                <span class="fw-bold">Senior .NET Developer</span>
-                                <div class="text-muted small">Posted 2 days ago</div>
-                            </td>
-                            <td>Engineering</td>
-                            <td><span class="badge bg-secondary rounded-pill">14</span></td>
-                            <td><span class="badge bg-success bg-opacity-10 text-success">Active</span></td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
-                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="ps-4">
-                                <span class="fw-bold">UI/UX Designer</span>
-                                <div class="text-muted small">Posted 5 days ago</div>
-                            </td>
-                            <td>Product Design</td>
-                            <td><span class="badge bg-secondary rounded-pill">8</span></td>
-                            <td><span class="badge bg-success bg-opacity-10 text-success">Active</span></td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
-                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="ps-4">
-                                <span class="fw-bold">Marketing Lead</span>
-                                <div class="text-muted small">Draft created yesterday</div>
-                            </td>
-                            <td>Marketing</td>
-                            <td><span class="badge bg-secondary rounded-pill">0</span></td>
-                            <td><span class="badge bg-warning bg-opacity-10 text-warning">Draft</span></td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-light me-2 text-success"><i class="bi bi-eye"></i> View</button>
-                                <button class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            if ($.fn.DataTable.isDataTable('#tblData')) {
+                $('#tblData').DataTable().destroy();
+            }
+
+            $('#tblData').DataTable({
+                "ajax": {
+                    "url": "/HR/JobPositions/GetAll",
+                    "dataSrc": function (json) {
+                        return json.data || [];
+                    }
+                },
+                "destroy": true,
+                "responsive": true,
+                "autoWidth": false,
+                "pageLength": 10,
+                "language": {
+                    "emptyTable": "No job positions found",
+                    "search": "",
+                    "searchPlaceholder": "Search jobs...",
+                    "paginate": {
+                        "previous": "<i class='bi bi-chevron-left'></i>",
+                        "next": "<i class='bi bi-chevron-right'></i>"
+                    }
+                },
+                "dom": '<"p-3 d-flex justify-content-between align-items-center"f>t<"p-3 d-flex justify-content-between align-items-center"ip>',
+                "columns": [
+                    { 
+                        "data": "title", 
+                        "width": "20%",
+                        "render": function(data) {
+                            return `<div class="d-flex align-items-center">
+                                        <div class="avatar-sm bg-light rounded px-2 py-1 me-2 text-primary">
+                                            <i class="bi bi-briefcase-fill"></i>
+                                        </div>
+                                        <span class="fw-bold text-dark">${data}</span>
+                                    </div>`;
+                        }
+                    },
+                    { 
+                        "data": "companyName", 
+                        "width": "15%",
+                        "render": function(data) {
+                            return `<span class="fw-medium text-muted"><i class="bi bi-building me-1"></i>${data || 'N/A'}</span>`;
+                        }
+                    },
+                    { 
+                        "data": "location", 
+                        "width": "15%",
+                        "render": function(data) {
+                            return `<span class="text-secondary"><i class="bi bi-geo-alt me-1"></i>${data}</span>`;
+                        }
+                    },
+                    { 
+                        "data": "jobType", 
+                        "width": "10%",
+                        "render": function(data) {
+                            let badgeClass = 'bg-secondary';
+                             if (data && data.toLowerCase().includes('full')) badgeClass = 'bg-success bg-opacity-25 text-success';
+                            else if (data && data.toLowerCase().includes('part')) badgeClass = 'bg-warning bg-opacity-25 text-warning';
+                            else if (data && data.toLowerCase().includes('remote')) badgeClass = 'bg-info bg-opacity-25 text-info';
+                            else if (data && data.toLowerCase().includes('contract')) badgeClass = 'bg-primary bg-opacity-25 text-primary';
+                            
+                            return `<span class="badge badge-soft rounded-pill ${badgeClass}">${data || 'Unknown'}</span>`;
+                        }
+                    },
+                    { 
+                        "data": "salary", 
+                        "width": "15%",
+                        "render": function(data) {
+                            if (!data || isNaN(parseInt(data))) {
+                                return '<span class="text-muted small">Negotiable</span>';
+                            }
+                            return `<span class="fw-bold text-dark">$${parseInt(data).toLocaleString()}</span>`;
+                        } 
+                    },
+                    {
+                        "data": "jobPositionId",
+                        "width": "10%",
+                        "className": "text-center",
+                        "render": function (data) {
+                            return `
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="/HR/JobPositions/Upsert?id=${data}" class="btn btn-sm btn-icon btn-outline-warning border-0 rounded-circle shadow-sm" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;" data-bs-toggle="tooltip" title="Edit">
+                                        <i class="bi bi-pencil-fill" style="font-size: 0.8rem;"></i>
+                                    </a>
+                                </div>
+                            `
+                        }
+                    }
+                ],
+                "drawCallback": function() {
+                     // Re-initialize tooltips on table draw
+                     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                       return new bootstrap.Tooltip(tooltipTriggerEl)
+                     })
+                }
+            });
+        }
+
+        function Delete(url) {
+            Swal.fire({
+                title: 'Delete this job?',
+                text: "This action cannot be undone.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#f5365c',
+                cancelButtonColor: '#e9ecef',
+                cancelButtonText: '<span class="text-dark fw-bold">Cancel</span>',
+                confirmButtonText: 'Yes, delete it',
+                customClass: {
+                    popup: 'card-glass'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        success: function (data) {
+                            if (data.success) {
+                                $('#tblData').DataTable().ajax.reload();
+                                itemDeletedToast();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    })
+                }
+            })
+        }
+        
+        function itemDeletedToast() {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Job Position deleted successfully'
+            })
+        }
+    </script>
+}

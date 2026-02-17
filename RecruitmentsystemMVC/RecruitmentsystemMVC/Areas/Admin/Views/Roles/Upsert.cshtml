@@ -1,0 +1,31 @@
+@model RecruitmentsystemMVC.Models.RoleModel
+
+<div class="container py-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>@(Model.RoleId == 0 ? "Create Role" : "Edit Role")</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Upsert" method="post">
+                <input type="hidden" asp-for="RoleId" />
+
+                <div class="mb-3">
+                    <label asp-for="RoleName"></label>
+                    <input asp-for="RoleName" class="form-control" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    @(Model.RoleId == 0 ? "Create" : "Update")
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

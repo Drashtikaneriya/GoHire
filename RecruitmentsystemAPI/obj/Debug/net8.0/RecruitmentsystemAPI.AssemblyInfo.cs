@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RecruitmentsystemAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28f5dd753d7cc897c146a28d8cd4424e254818bc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62ae2acdad257002eb5c9ae8085df845654f0519")]
 [assembly: System.Reflection.AssemblyProductAttribute("RecruitmentsystemAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RecruitmentsystemAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

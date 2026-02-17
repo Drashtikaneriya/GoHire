@@ -1,0 +1,50 @@
+﻿@model RecruitmentsystemMVC.Models.ApplicationModel
+
+@{
+    ViewData["Title"] = "Update Application";
+}
+
+<div class="container mt-4">
+    <h3>Update Application</h3>
+
+    <form asp-action="Update" method="post" class="mt-3">
+
+        <!-- REQUIRED -->
+        <input type="hidden" asp-for="ApplicationId" />
+
+        <div class="mb-3">
+            <label class="form-label">Candidate Name</label>
+            <input class="form-control" value="@Model.CandidateName" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Job Title</label>
+            <input class="form-control" value="@Model.JobTitle" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select asp-for="Status" class="form-control">
+                <option value="Applied">Applied</option>
+                <option value="Shortlisted">Shortlisted</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">HR Notes</label>
+            <textarea asp-for="HRNotes"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Add remarks (optional)">
+            </textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Update
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+    </form>
+</div>

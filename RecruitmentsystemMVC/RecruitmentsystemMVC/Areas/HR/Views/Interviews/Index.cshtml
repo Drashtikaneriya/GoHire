@@ -1,46 +1,145 @@
+@model IEnumerable<RecruitmentsystemMVC.Models.DTOs.InterviewDTO>
+
 @{
     ViewData["Title"] = "Interviews";
 }
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-bold mb-0">Scheduled Interviews</h3>
-            <p class="text-muted small">Monitor upcoming candidate evaluations and technical rounds.</p>
-        </div>
-        <button class="btn btn-outline-success rounded-pill px-4">
-            <i class="bi bi-calendar-plus me-2"></i> Schedule Meeting
-        </button>
+        <h2 class="fw-bold text-dark"><i class="bi bi-calendar-event me-2"></i>Interviews</h2>
+        <a asp-controller="Interviews" asp-action="Upsert" class="btn btn-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg me-2"></i>Schedule Interview
+        </a>
     </div>
 
-    <div class="row g-4">
-        <div class="col-md-6 col-xl-4">
-            <div class="card border-0 shadow-sm p-4 text-center">
-                <div class="mx-auto bg-success bg-opacity-10 p-3 rounded-circle mb-3" style="width: 60px;">
-                    <i class="bi bi-camera-video fs-3 text-success"></i>
-                </div>
-                <h6 class="fw-bold mb-1">Technical Interview</h6>
-                <p class="text-muted small mb-3">Today at 2:00 PM</p>
-                <div class="bg-light p-3 rounded-3 mb-3">
-                    <div class="fw-bold">Alex Rivera</div>
-                    <small class="text-muted">Software Engineer Role</small>
-                </div>
-                <button class="btn btn-success w-100 rounded-pill">Join Meeting</button>
-            </div>
-        </div>
-        <div class="col-md-6 col-xl-4">
-            <div class="card border-0 shadow-sm p-4 text-center">
-                <div class="mx-auto bg-primary bg-opacity-10 p-3 rounded-circle mb-3" style="width: 60px;">
-                    <i class="bi bi-people fs-3 text-primary"></i>
-                </div>
-                <h6 class="fw-bold mb-1">Culture Fit Round</h6>
-                <p class="text-muted small mb-3">Tomorrow at 10:30 AM</p>
-                <div class="bg-light p-3 rounded-3 mb-3">
-                    <div class="fw-bold">Sarah Chen</div>
-                    <small class="text-muted">Marketing Specialist</small>
-                </div>
-                <button class="btn btn-outline-primary w-100 rounded-pill">Reschedule</button>
-            </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <table id="interviewsTable" class="table table-hover align-middle w-100">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">ID</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Candidate</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Date</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Mode</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Round</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Result</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Feedback</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data loaded via API/AJAX -->
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            dataTable = $('#interviewsTable').DataTable({
+                "ajax": {
+                    "url": "/HR/Interviews/GetAll",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "interviewId", "width": "5%" },
+                    { 
+                        "data": "candidateName",
+                        "width": "15%",
+                        "render": function(data) {
+                            return `<span class="fw-bold text-dark">${data || 'N/A'}</span>`;
+                        }
+                    },
+                    { 
+                        "data": "interviewDate", 
+                        "width": "15%",
+                        "render": function(data) {
+                           return new Date(data).toLocaleString();
+                        }
+                    },
+                    { "data": "mode", "width": "10%" },
+                    { "data": "roundNo", "width": "5%" },
+                    { 
+                        "data": "result", 
+                        "width": "10%",
+                        "render": function(data) {
+                            let color = 'secondary';
+                            if (data === 'Pending') color = 'warning';
+                            else if (data === 'Passed') color = 'success';
+                            else if (data === 'Failed') color = 'danger';
+                            
+                            return `<span class="badge bg-${color}">${data || 'Pending'}</span>`;
+                        }
+                    },
+                    { 
+                        "data": "feedback", 
+                        "width": "20%",
+                        "render": function(data) {
+                            return data ? `<span title="${data}">${data.length > 30 ? data.substring(0, 30) + '...' : data}</span>` : '<span class="text-muted fst-italic">No feedback</span>';
+                        }
+                    },
+                    {
+                        "data": "interviewId",
+                        "width": "15%",
+                        "render": function (data) {
+                            return `
+                                <div class="text-end">
+                                    <a href="/HR/Interviews/Upsert?id=${data}" class="btn btn-sm btn-outline-success mx-1">
+                                         <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a onclick="Delete('/HR/Interviews/Delete/${data}')" class="btn btn-sm btn-outline-danger mx-1">
+                                         <i class="bi bi-trash-fill"></i> Delete
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "No interviews found"
+                }
+            });
+        }
+
+        function Delete(url) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        success: function (data) {
+                            if (data.success) {
+                                dataTable.ajax.reload();
+                                Swal.fire("Deleted!", data.message, "success");
+                            } else {
+                                Swal.fire("Error", data.message, "error");
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

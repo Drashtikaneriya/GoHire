@@ -3,8 +3,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// 🚀 Add HttpClient with SSL Bypass
+builder.Services.AddHttpClient("RecruitmentAPI").ConfigurePrimaryHttpMessageHandler(() => 
+{
+    return new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+    };
+});
+builder.Services.AddHttpClient(); // Keep default for other needs
+
 // 🚀 Add HttpClient
-builder.Services.AddHttpClient();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<RecruitmentsystemMVC.Services.IApiService, RecruitmentsystemMVC.Services.ApiService>();
 
 // 🔐 Add Session
 builder.Services.AddSession(options =>

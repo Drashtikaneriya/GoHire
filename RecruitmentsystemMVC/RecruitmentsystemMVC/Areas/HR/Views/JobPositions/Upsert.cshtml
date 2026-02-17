@@ -1,0 +1,118 @@
+@model RecruitmentsystemMVC.Models.JobPositionModel
+
+@{
+    ViewData["Title"] = (Model.JobPositionId != 0 ? "Edit" : "Create") + " Job Position";
+    var isEdit = Model.JobPositionId != 0;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg border-0 rounded-4 mt-4 mb-5 animate__animated animate__fadeIn">
+            <div class="card-header bg-gradient-primary text-white p-4 rounded-top-4" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                <div class="d-flex align-items-center">
+                    <i class="bi @(isEdit ? "bi-pencil-square" : "bi-plus-circle-fill") fs-3 me-3"></i>
+                    <h2 class="mb-0 fw-bold">@(isEdit ? "Edit" : "Create") Job Position</h2>
+                </div>
+                <p class="mb-0 mt-2 text-white-50">@(isEdit ? "Update existing job details below." : "Fill in the details to create a new job position.")</p>
+            </div>
+            
+            <div class="card-body p-5 bg-white">
+                <form method="post" class="needs-validation" novalidate>
+                    <input asp-for="JobPositionId" hidden />
+                    <input asp-for="CreatedBy" hidden />
+                    
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger shadow-sm border-0 rounded-3 mb-4 icon-link-hover" role="alert"></div>
+
+                    <!-- Job Title & Company -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Title" class="form-control bg-light border-0 shadow-sm rounded-3" placeholder="Job Title" />
+                                <label asp-for="Title" class="text-muted"><i class="bi bi-briefcase me-2"></i>Job Title</label>
+                                <span asp-validation-for="Title" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-select bg-light border-0 shadow-sm rounded-3">
+                                    <option disabled selected>-- Select Company --</option>
+                                </select>
+                                <label asp-for="CompanyId" class="text-muted"><i class="bi bi-building me-2"></i>Company</label>
+                                <span asp-validation-for="CompanyId" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location, Salary, Type -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="Location" class="form-control bg-light border-0 shadow-sm rounded-3" placeholder="Location" />
+                                <label asp-for="Location" class="text-muted"><i class="bi bi-geo-alt me-2"></i>Location</label>
+                                <span asp-validation-for="Location" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input asp-for="Salary" class="form-control bg-light border-0 shadow-sm rounded-3" placeholder="Salary Range" />
+                                <label asp-for="Salary" class="text-muted"><i class="bi bi-cash-stack me-2"></i>Salary Range</label>
+                                <span asp-validation-for="Salary" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select asp-for="JobType" class="form-select bg-light border-0 shadow-sm rounded-3">
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Remote">Remote</option>
+                                </select>
+                                <label asp-for="JobType" class="text-muted"><i class="bi bi-clock me-2"></i>Job Type</label>
+                                <span asp-validation-for="JobType" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12 mb-5">
+                       <label asp-for="Description" class="form-label text-muted fw-bold ms-1"><i class="bi bi-card-text me-2"></i>Job Description</label>
+                       <textarea asp-for="Description" class="form-control bg-light border-0 shadow-sm rounded-3 p-3" style="height: 150px; resize: none;" placeholder="Enter detailed job description here..."></textarea>
+                       <span asp-validation-for="Description" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <a asp-action="Index" class="btn btn-light border-0 shadow-sm px-4 py-2 rounded-pill fw-semibold text-secondary hover-scale">
+                            <i class="bi bi-arrow-left me-2"></i>Back to List
+                        </a>
+                        <button type="submit" class="btn btn-primary bg-gradient border-0 shadow px-5 py-2 rounded-pill fw-bold hover-scale">
+                            <i class="bi bi-check-lg me-2"></i>@(isEdit ? "Update Job" : "Create Job")
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-scale {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-scale:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+    .form-floating > label {
+        padding-left: 1.25rem;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        background-color: #fff !important;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

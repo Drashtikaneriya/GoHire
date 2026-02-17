@@ -7,6 +7,8 @@ D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\bin\Debug\net8.0\Recr
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\bin\Debug\net8.0\RecruitmentsystemMVC.runtimeconfig.json
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\bin\Debug\net8.0\RecruitmentsystemMVC.dll
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\bin\Debug\net8.0\RecruitmentsystemMVC.pdb
+D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.csproj.AssemblyReference.cache
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.GeneratedMSBuildEditorConfig.editorconfig
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.AssemblyInfoInputs.cache
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.AssemblyInfo.cs
@@ -22,9 +24,10 @@ D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\stat
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\staticwebassets.build.json.cache
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\staticwebassets.development.json
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\Recruitm.7F450D48.Up2Date
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.dll
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\refint\RecruitmentsystemMVC.dll
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.pdb
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\RecruitmentsystemMVC.genruntimeconfig.cache
 D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\ref\RecruitmentsystemMVC.dll
+D:\Github\GoHire\RecruitmentsystemMVC\RecruitmentsystemMVC\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -124,6 +124,7 @@ namespace RecruitmentsystemAPI.Controllers
 
         // ================= SOFT DELETE =================
         [Authorize(Roles = "Admin")]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

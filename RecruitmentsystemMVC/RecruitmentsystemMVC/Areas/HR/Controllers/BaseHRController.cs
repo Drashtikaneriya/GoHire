@@ -11,7 +11,8 @@ namespace RecruitmentsystemMVC.Areas.HR.Controllers
             var role = HttpContext.Session.GetString("UserRole");
             var token = HttpContext.Session.GetString("JWToken");
 
-            if (string.IsNullOrEmpty(token) || role != "HR")
+            // Standardize session validation across all HR controllers
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(role) || role != "HR")
             {
                 context.Result = new RedirectToActionResult("Login", "Account", new { area = "" });
             }

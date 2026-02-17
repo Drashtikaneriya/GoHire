@@ -1,59 +1,176 @@
+@model IEnumerable<RecruitmentsystemMVC.Models.DTOs.ApplicationDTO>
+
 @{
     ViewData["Title"] = "Applications";
 }
 
-<div class="container-fluid">
-    <div class="mb-4">
-        <h3 class="fw-bold mb-0">Incoming Applications</h3>
-        <p class="text-muted small">Review and filter candidate submissions for all open positions.</p>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark"><i class="bi bi-file-earmark-person me-2"></i>Applications</h2>
     </div>
 
-    <div class="card bg-white border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4">Candidate</th>
-                            <th>Applied Position</th>
-                            <th>Experience</th>
-                            <th>Score</th>
-                            <th>Status</th>
-                            <th class="text-end pe-4">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="ps-4">
-                                <div class="fw-bold">Michael Scott</div>
-                                <div class="text-muted small">michael.s@gmail.com</div>
-                            </td>
-                            <td>Senior .NET Developer</td>
-                            <td>8 Years</td>
-                            <td><span class="text-success fw-bold">92%</span></td>
-                            <td><span class="badge bg-primary bg-opacity-10 text-primary">In Review</span></td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-success me-2 px-3 rounded-pill">Schedule</button>
-                                <button class="btn btn-sm btn-light text-danger"><i class="bi bi-x-circle"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="ps-4">
-                                <div class="fw-bold">Pam Beesly</div>
-                                <div class="text-muted small">pam.b@gmail.com</div>
-                            </td>
-                            <td>UI/UX Designer</td>
-                            <td>4 Years</td>
-                            <td><span class="text-info fw-bold">85%</span></td>
-                            <td><span class="badge bg-warning bg-opacity-10 text-warning">New</span></td>
-                            <td class="text-end pe-4">
-                                <button class="btn btn-sm btn-success me-2 px-3 rounded-pill">Schedule</button>
-                                <button class="btn btn-sm btn-light text-danger"><i class="bi bi-x-circle"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <table id="applicationsTable" class="table table-hover align-middle w-100">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">App ID</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Candidate</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Job Title</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Applied Date</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Status</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7">HR Notes</th>
+                        <th class="text-secondary text-uppercase text-xs font-weight-bolder opacity-7 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data loaded via API/AJAX -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Status Update Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Application Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="appIdInput">
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select id="statusSelect" class="form-select">
+                        <option value="Applied">Applied</option>
+                        <option value="Shortlisted">Shortlisted</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Selected">Selected</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">HR Notes</label>
+                    <textarea id="hrNotesInput" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveStatus()">Save Changes</button>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        var dataTable;
+
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            dataTable = $('#applicationsTable').DataTable({
+                "ajax": {
+                    "url": "/HR/Applications/GetAll",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "applicationId", "width": "5%" },
+                    { 
+                        "data": "candidateName",
+                        "width": "15%",
+                        "render": function(data) {
+                            return `<span class="fw-bold text-dark">${data}</span>`;
+                        }
+                    },
+                    { "data": "jobTitle", "width": "15%" },
+                    { 
+                        "data": "appliedDate", 
+                        "width": "10%",
+                        "render": function(data) {
+                            return new Date(data).toLocaleDateString();
+                        }
+                    },
+                    { 
+                        "data": "status", 
+                        "width": "10%",
+                        "render": function(data) {
+                            let color = 'secondary';
+                            if (data === 'Shortlisted') color = 'info';
+                            else if (data === 'Rejected') color = 'danger';
+                            else if (data === 'Selected') color = 'success';
+                            else if (data === 'Applied') color = 'primary';
+                            
+                            return `<span class="badge bg-${color}">${data}</span>`;
+                        }
+                    },
+                    { "data": "hrNotes", "width": "20%" },
+                    {
+                        "data": "applicationId",
+                        "render": function (data, type, row) {
+                            // Escape data for usage in function calls
+                            const notes = row.hrNotes ? row.hrNotes.replace(/'/g, "&apos;") : "";
+                            return `
+                                <div class="text-end">
+                                    <button onclick="openStatusModal(${data}, '${row.status}', '${notes}')" class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="bi bi-pencil-square"></i> Status
+                                    </button>
+                                    <a href="/HR/Applications/Details/${data}" class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </div>
+                            `;
+                        },
+                        "width": "15%"
+                    }
+                ],
+                "language": {
+                    "emptyTable": "No applications found"
+                }
+            });
+        }
+
+        function openStatusModal(id, status, notes) {
+            $('#appIdInput').val(id);
+            $('#statusSelect').val(status);
+            $('#hrNotesInput').val(notes);
+            $('#statusModal').modal('show');
+        }
+
+        function saveStatus() {
+            var id = $('#appIdInput').val();
+            var status = $('#statusSelect').val();
+            var notes = $('#hrNotesInput').val();
+
+            $.ajax({
+                url: '/HR/Applications/UpdateStatus',
+                type: 'POST',
+                data: { applicationId: id, status: status, hrNotes: notes },
+                success: function (data) {
+                    if (data.success) {
+                        $('#statusModal').modal('hide');
+                        dataTable.ajax.reload();
+                        Swal.fire({
+                            title: "Success!",
+                            text: data.message,
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire("Error", data.message, "error");
+                    }
+                }
+            });
+        }
+    </script>
+}
