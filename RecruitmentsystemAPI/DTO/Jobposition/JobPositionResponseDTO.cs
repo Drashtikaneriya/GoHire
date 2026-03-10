@@ -14,6 +14,10 @@
 
         public string? SalaryRange { get; set; }
 
+        public int CompanyId { get; set; }
+
+        public string? CompanyName { get; set; }
+
         public int CreatedBy { get; set; }
 
         public DateTime CreatedDate { get; set; }

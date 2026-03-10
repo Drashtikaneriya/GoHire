@@ -1,0 +1,131 @@
+@model RecruitmentsystemMVC.Models.CandidateDashboardViewModel
+
+@{
+    ViewData["Title"] = "Candidate Dashboard";
+}
+
+<div class="container">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card welcome-card mb-4 border-0">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="fw-bold mb-3">Welcome back, @Context.Session.GetString("UserName")! ✨</h1>
+                        <p class="lead mb-4">You have @Model.AppliedJobs applied jobs and @Model.UpcomingInterviews upcoming interviews.</p>
+                        <a href="/Candidate/ApplyJob" class="btn btn-light btn-lg rounded-pill px-4 fw-bold shadow-sm" style="color: #6f42c1;">Explore Jobs</a>
+                    </div>
+                    <div class="col-md-4 d-none d-md-block text-end">
+                        <i class="bi bi-stars" style="font-size: 100px; opacity: 0.2;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card text-center p-4 border-0 shadow-sm h-100">
+                <h2 class="display-4 fw-bold" style="color: var(--cand-primary);">@Model.TotalJobs</h2>
+                <p class="text-muted mb-0">Total Active Jobs</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-4 border-0 shadow-sm h-100">
+                <h2 class="display-4 fw-bold text-success">@Model.AppliedJobs</h2>
+                <p class="text-muted mb-0">Total Applied Jobs</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-4 border-0 shadow-sm h-100">
+                <h2 class="display-4 fw-bold text-info">@Model.UpcomingInterviews</h2>
+                <p class="text-muted mb-0">Upcoming Interviews</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <h4 class="fw-bold mb-4">Recommended Jobs</h4>
+            <div class="row g-3">
+                <div class="col-12">
+                    @if (Model.RecommendedJobs != null && Model.RecommendedJobs.Any())
+                    {
+                        foreach (var job in Model.RecommendedJobs)
+                        {
+                            <div class="card p-4 border-0 shadow-sm mb-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="d-flex gap-3">
+                                        <div class="bg-light p-3 rounded-4">
+                                            <i class="bi bi-briefcase text-primary fs-3"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold mb-1">@job.Title</h5>
+                                            <p class="text-muted mb-2">@job.CompanyName • @job.Type</p>
+                                            <div class="d-flex gap-2">
+                                                <span class="badge bg-light text-dark border">@job.Location</span>
+                                                <span class="badge bg-light text-dark border">@job.SalaryRange</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="/Candidate/ApplyJob/Details/@job.JobPositionId" class="btn btn-purple">Apply</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No jobs available right now.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h4 class="fw-bold mb-4">Application Status</h4>
+            <div class="card p-4 border-0 shadow-sm">
+                <div class="position-relative">
+                    @if (Model.RecentApplications != null && Model.RecentApplications.Any())
+                    {
+                        foreach (var app in Model.RecentApplications)
+                        {
+                            <div class="d-flex gap-3 mb-4 section-item">
+                                @if (app.Status == "Applied" || app.Status == "Pending")
+                                {
+                                    <div class="text-warning"><i class="bi bi-hourglass-split fs-5"></i></div>
+                                }
+                                else if (app.Status == "Shortlisted" || app.Status == "Selected")
+                                {
+                                    <div class="text-success"><i class="bi bi-check-circle-fill fs-5"></i></div>
+                                }
+                                else
+                                {
+                                    <div class="text-danger"><i class="bi bi-x-circle-fill fs-5"></i></div>
+                                }
+                                <div>
+                                    <h6 class="fw-bold mb-0">@app.Status</h6>
+                                    <small class="text-muted">@app.JobTitle • @app.AppliedOn.ToString("MMM dd")</small>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted">No applications submitted yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .section-item:not(:last-child) {
+        border-left: 2px dashed #e5e7eb;
+        margin-left: 10px;
+        padding-left: 20px;
+        padding-bottom: 20px;
+    }
+    .section-item:last-child {
+        margin-left: 10px;
+        padding-left: 20px;
+    }
+</style>

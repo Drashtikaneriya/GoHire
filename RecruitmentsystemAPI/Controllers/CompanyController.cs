@@ -100,44 +100,72 @@ namespace RecruitmentsystemAPI.Controllers
         // ================= UPDATE =================
         [Authorize(Roles = "Admin,HR")]
         [HttpPut]
-        public async Task<IActionResult> Update(CompanyUpdateDTO dto)
+        public async Task<IActionResult> Update([FromBody] CompanyUpdateDTO dto)
         {
-            var existing = await _db.Company
-                .FirstOrDefaultAsync(c => c.CompanyId == dto.CompanyId);
+            if (dto == null)
+                return BadRequest(new { message = "Invalid data" });
 
-            if (existing == null)
-                return NotFound(new { message = "Company not found" });
+            if (!ModelState.IsValid)
+                return BadRequest(new { message = "Validation failed", errors = ModelState });
 
-            existing.CompanyName = dto.CompanyName;
-            existing.Industry = dto.Industry;
-            existing.Email = dto.Email;
-            existing.Phone = dto.Phone;
-            existing.Website = dto.Website;
-            existing.Address = dto.Address;
-            existing.IsActive = dto.IsActive;
-            existing.ModifiedDate = DateTime.Now;
+            try
+            {
+                var existing = await _db.Company
+                    .FirstOrDefaultAsync(c => c.CompanyId == dto.CompanyId);
 
-            await _db.SaveChangesAsync();
+                if (existing == null)
+                    return NotFound(new { message = "Company not found" });
 
-            return Ok(new { message = "Company updated successfully" });
+                existing.CompanyName = dto.CompanyName;
+                existing.Industry = dto.Industry;
+                existing.Email = dto.Email;
+                existing.Phone = dto.Phone;
+                existing.Website = dto.Website;
+                existing.Address = dto.Address;
+                existing.IsActive = dto.IsActive;
+                existing.ModifiedDate = DateTime.Now;
+
+                await _db.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Company updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Internal server error: " + ex.Message });
+            }
         }
 
-        // ================= SOFT DELETE =================
+        // ================= DELETE =================
         [Authorize(Roles = "Admin")]
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var company = await _db.Company.FindAsync(id);
-            if (company == null)
-                return NotFound(new { message = "Company not found" });
+            try
+            {
+                var company = await _db.Company.FindAsync(id);
+                if (company == null)
+                    return NotFound(new { success = false, message = "Company not found" });
 
-            company.IsActive = false;
-            company.ModifiedDate = DateTime.Now;
+                //// Check for related Job Positions (Foreign Key Constraint)
+                //var hasJobs = await _db.JobPositions.AnyAsync(j => j.CompanyId == id);
+                //if (hasJobs)
+                //{
+                //    // If jobs exist, we soft delete/deactivate instead of hard delete
+                //    company.IsActive = false;
+                //    company.ModifiedDate = DateTime.Now;
+                //    await _db.SaveChangesAsync();
+                //    return Ok(new { success = true, message = "Company has active job listings, so it was deactivated instead of deleted." });
+                //}
 
-            await _db.SaveChangesAsync();
+                _db.Company.Remove(company);
+                await _db.SaveChangesAsync();
 
-            return Ok(new { message = "Company deactivated successfully" });
+                return Ok(new { success = true, message = "Company deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "An error occurred while deleting: " + ex.Message });
+            }
         }
     }
 }

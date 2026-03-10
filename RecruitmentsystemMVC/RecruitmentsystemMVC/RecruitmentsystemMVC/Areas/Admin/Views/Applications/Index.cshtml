@@ -1,0 +1,131 @@
+@model List<RecruitmentsystemMVC.Models.DTOs.ApplicationResponseDTO>
+
+@{
+    ViewData["Title"] = "Applications (Admin)";
+}
+
+<div class="container py-5">
+    <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+            <h1 class="fw-bold text-dark display-6 mb-1">Applications</h1>
+            <p class="text-muted mb-0">Overview of all candidate applications (Read-only)</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light border-bottom-0">
+                    <tr class="text-secondary small text-uppercase">
+                        <th class="ps-4">ID</th>
+                        <th>Candidate</th>
+                        <th>Job Title</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var app in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-muted">#@app.ApplicationId</td>
+                            <td><div class="fw-bold text-dark">@app.CandidateName</div></td>
+                            <td><span class="badge bg-light text-dark border fw-normal">@app.JobTitle</span></td>
+                            <td class="small text-muted">@app.AppliedOn.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                @{
+                                    var badgeColor = "secondary";
+                                    var currentStatus = app.Status ?? "Applied";
+                                    if (currentStatus == "Applied" || currentStatus == "Pending") badgeColor = "warning text-dark";
+                                    else if (currentStatus == "Shortlisted") badgeColor = "info text-white";
+                                    else if (currentStatus == "Rejected") badgeColor = "danger text-white";
+                                    else if (currentStatus == "Selected") badgeColor = "success text-white";
+                                }
+                                <span class="badge bg-@badgeColor rounded-pill px-3">@currentStatus</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button onclick="ViewDetails(@app.ApplicationId)" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-3 opacity-25"></i>
+                                No applications found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="modalTitle">Application Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 pt-2">
+                <div id="modalContent" class="text-center py-4 d-none">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+                <div id="detailsBody">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ViewDetails(id) {
+        const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+        const body = document.getElementById('detailsBody');
+        body.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>';
+        modal.show();
+
+        fetch(`/Admin/Applications/Get/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                body.innerHTML = `
+                    <div class="list-group list-group-flush rounded-3 border">
+                        <div class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                            <span class="text-muted">Candidate</span>
+                            <span class="fw-bold">${data.candidateName}</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Job Title</span>
+                            <span class="fw-bold">${data.jobTitle}</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Status</span>
+                            <span class="badge bg-info">${data.status}</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Applied On</span>
+                            <span class="fw-bold">${new Date(data.appliedOn).toLocaleDateString()}</span>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="text-muted mb-1">HR Notes</div>
+                            <div class="small fst-italic text-dark">${data.hrNotes || "No notes provided."}</div>
+                        </div>
+                    </div>
+                `;
+            })
+            .catch(err => {
+                body.innerHTML = '<div class="alert alert-danger">Error loading data.</div>';
+            });
+    }
+</script>

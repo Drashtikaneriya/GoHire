@@ -12,6 +12,8 @@
 
         public string? SalaryRange { get; set; }
 
+        public int CompanyId { get; set; }
+
         public int CreatedBy { get; set; }   // UserId
     }
 }

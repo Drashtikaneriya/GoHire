@@ -18,11 +18,7 @@ namespace RecruitmentsystemAPI.Validators.Interview
                 .WithMessage("Mode must be Online or Offline.");
 
             RuleFor(x => x.Result).Cascade(CascadeMode.Stop)
-                .Must(r =>
-                    r == null ||
-                    r == "Pending" ||
-                    r == "Selected" ||
-                    r == "Rejected")
+                .IsInEnum()
                 .WithMessage("Result must be Pending, Selected, or Rejected.");
 
             RuleFor(x => x.Feedback).Cascade(CascadeMode.Stop)

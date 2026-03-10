@@ -39,6 +39,13 @@ namespace RecruitmentsystemAPI.Data
                 .HasForeignKey(j => j.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // ---------- JobPositions → Company ----------
+            modelBuilder.Entity<JobPosition>()
+                .HasOne(j => j.Company)
+                .WithMany()
+                .HasForeignKey(j => j.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // ---------- Applications → JobPositions ----------
             modelBuilder.Entity<Application>()
                 .HasOne(a => a.JobPosition)

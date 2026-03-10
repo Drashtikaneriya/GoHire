@@ -15,7 +15,7 @@ public class Application
     public int CandidateId { get; set; }
 
     [MaxLength(50)]
-    public string Status { get; set; } = "Applied";
+    public string? Status { get; set; }
 
     public string? HRNotes { get; set; }
 
@@ -30,19 +30,5 @@ public class Application
     [ForeignKey("CandidateId")]
     public Candidate? Candidate { get; set; }
 
-    public class ApplicationInsertDTO
-    {
-        [Required]
-        public int JobId { get; set; }
-
-        [Required]
-        public int CandidateId { get; set; }
-
-        // Optional – default will be "Applied" if not provided
-        [MaxLength(50)]
-        public string? Status { get; set; }
-
-        // Optional – HR can add later
-        public string? HRNotes { get; set; }
-    }
+   
 }

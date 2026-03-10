@@ -1,0 +1,232 @@
+@model RecruitmentsystemMVC.Models.DTOs.InterviewDTO
+
+@{
+    var isConducting = ViewData["IsConducting"] as bool? ?? false;
+    ViewData["Title"] = isConducting ? "Conduct Interview" : (Model.InterviewId == 0 ? "Schedule Interview" : "Edit Interview");
+}
+
+<div class="container py-5 min-vh-100 bg-light">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/HR/Interview/List" class="text-decoration-none">Interviews</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header @(isConducting ? "bg-success" : "bg-primary") text-white py-4 px-4 border-0">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-white bg-opacity-20 p-3 me-3">
+                            <i class="bi @(isConducting ? "bi-person-video3" : (Model.InterviewId != 0 ? "bi-pencil-square" : "bi-calendar-plus")) fs-3 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold mb-0">@ViewData["Title"]</h3>
+                            <p class="mb-0 opacity-75 small text-white">
+                                @(isConducting ? "Fill in the candidate's performance details and final result." : "Ensure all details are accurate for the session.")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 p-md-5 bg-white">
+                    <form asp-action="Upsert" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4" role="alert"></div>
+                        <input type="hidden" asp-for="InterviewId" />
+                        <input type="hidden" asp-for="CreatedDate" />
+
+                        @if (isConducting)
+                        {
+                            <input type="hidden" asp-for="ApplicationId" />
+                            <input type="hidden" asp-for="InterviewerId" />
+                            <input type="hidden" asp-for="InterviewDate" />
+                            <input type="hidden" asp-for="Mode" />
+                            <input type="hidden" asp-for="RoundNo" />
+                            
+                            <div class="p-4 bg-light rounded-4 mb-4 border-start border-4 border-success">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="small text-muted text-uppercase fw-bold d-block">Candidate</label>
+                                        <span class="fw-bold fs-5">@Model.CandidateName</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small text-muted text-uppercase fw-bold d-block">Session Info</label>
+                                        <span class="text-dark">@Model.InterviewDate.ToString("MMM dd, hh:mm tt") (@Model.Mode)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Application Selection -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark mb-2">Target Application</label>
+                                    @if (Model.InterviewId == 0)
+                                    {
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-person-badge"></i></span>
+                                            <select asp-for="ApplicationId" asp-items="@ViewBag.Applications" class="form-select border-2 shadow-none py-2 border-start-0">
+                                                <option disabled selected>-- Select Candidate --</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" asp-for="ApplicationId" />
+                                        <div class="p-2 px-3 bg-light rounded-3 border fw-semibold text-dark">@Model.CandidateName</div>
+                                    }
+                                    <span asp-validation-for="ApplicationId" class="text-danger small"></span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark mb-2">Interviewer</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-person-workspace"></i></span>
+                                        <select asp-for="InterviewerId" asp-items="@ViewBag.Interviewers" class="form-select border-2 shadow-none py-2 border-start-0">
+                                        </select>
+                                    </div>
+                                    <span asp-validation-for="InterviewerId" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="row g-4 mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark">Interview Date & Time</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-clock"></i></span>
+                                        <input asp-for="InterviewDate" type="datetime-local" class="form-control border-2 shadow-none py-2 border-start-0" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark">Interview Mode</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-laptop"></i></span>
+                                        <select asp-for="Mode" class="form-select border-2 shadow-none py-2 border-start-0">
+                                            <option value="Online">Online / Video Call</option>
+                                            <option value="Offline">Offline / In-Person</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark">Round No</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-hash"></i></span>
+                                        <input asp-for="RoundNo" type="number" class="form-control border-2 shadow-none py-2 border-start-0" min="1" max="10" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold text-dark">Target Status</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-2 border-end-0"><i class="bi bi-flag"></i></span>
+                                        <select asp-for="Result" class="form-select border-2 shadow-none py-2 border-start-0">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Selected">Selected</option>
+                                            <option value="Rejected">Rejected</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @if (isConducting || Model.InterviewId != 0)
+                        {
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark">Performance Feedback</label>
+                                <textarea asp-for="Feedback" class="form-control border-2 shadow-none rounded-3" rows="5" placeholder="Detailed notes about technical and soft skills..."></textarea>
+                                <span asp-validation-for="Feedback" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-5 @(!isConducting ? "d-none" : "")">
+                                <label class="form-label fw-bold text-dark">Final Interview Result</label>
+                                <div class="d-flex gap-4">
+                                    <div class="form-check custom-radio success">
+                                        <input class="form-check-input" type="radio" value="Selected" id="resSelected" name="Result" @(Model.Result == "Selected" || Model.Result == "Passed" ? "checked" : "")>
+                                        <label class="form-check-label fw-semibold" for="resSelected">Selected / Passed</label>
+                                    </div>
+                                    <div class="form-check custom-radio danger">
+                                        <input class="form-check-input" type="radio" value="Rejected" id="resRejected" name="Result" @(Model.Result == "Rejected" || Model.Result == "Failed" ? "checked" : "")>
+                                        <label class="form-check-label fw-semibold" for="resRejected">Rejected / Failed</label>
+                                    </div>
+                                    <div class="form-check custom-radio warning">
+                                        <input class="form-check-input" type="radio" value="Pending" id="resPending" name="Result" @(Model.Result == "Pending" || string.IsNullOrEmpty(Model.Result) ? "checked" : "")>
+                                        <label class="form-check-label fw-semibold" for="resPending">Pending</label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end gap-3 border-top pt-4">
+                            <a href="/HR/Interview/List" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn @(isConducting ? "btn-success" : "btn-primary") rounded-pill px-5 py-2 fw-bold shadow">
+                                <i class="bi bi-check2-circle me-1"></i> @(isConducting ? "Submit Assessment" : (Model.InterviewId == 0 ? "Schedule Now" : "Update Schedule"))
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-radio .form-check-input:checked { background-color: var(--bs-primary); border-color: var(--bs-primary); }
+    .custom-radio.success .form-check-input:checked { background-color: #198754; border-color: #198754; }
+    .custom-radio.danger .form-check-input:checked { background-color: #dc3545; border-color: #dc3545; }
+    .custom-radio.warning .form-check-input:checked { background-color: #ffc107; border-color: #ffc107; }
+</style>
+
+<style>
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        background-color: #fff;
+    }
+    .input-group-text {
+        color: #6c757d;
+    }
+    .ls-wide { letter-spacing: 0.5px; }
+    .breadcrumb-item a { color: #6c757d; font-weight: 500; }
+    .card { transition: none; }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            @if (TempData["Success"] != null)
+            {
+                <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '@Html.Raw(TempData["Success"])',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+                </text>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: '@Html.Raw(TempData["Error"])',
+                    confirmButtonColor: '#198754'
+                });
+                </text>
+            }
+        });
+    </script>
+}

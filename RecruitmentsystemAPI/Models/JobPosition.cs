@@ -23,6 +23,15 @@ namespace RecruitmentsystemAPI.Models
 
         [MaxLength(100)]
         public string? SalaryRange { get; set; }
+
+        // 👇 FOREIGN KEY (CompanyId) REFERENCES Company(CompanyId)
+        [Required]
+        [ForeignKey("Company")]
+        public int CompanyId { get; set; }
+
+        // Navigation property
+        public Company? Company { get; set; }
+
         // 👇 FOREIGN KEY (CreatedBy) REFERENCES Users(UserId)
         [Required]
         [ForeignKey("User")]

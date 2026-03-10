@@ -55,8 +55,8 @@
         "IsRequired": true
       },
       {
-        "Name": "application",
-        "Type": "Application",
+        "Name": "dto",
+        "Type": "RecruitmentsystemAPI.DTOs.Application.ApplicationUpdateDTO",
         "IsRequired": true
       }
     ],

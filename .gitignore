@@ -1,0 +1,24 @@
+## .NET / ASP.NET Core
+## Build output
+bin/
+obj/
+
+## Visual Studio / Rider
+.vs/
+*.user
+*.suo
+.idea/
+
+## NuGet
+*.nupkg
+**/packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## OS
+Thumbs.db
+.DS_Store
+
+## Logs
+*.log

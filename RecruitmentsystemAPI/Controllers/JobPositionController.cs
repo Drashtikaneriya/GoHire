@@ -24,6 +24,7 @@ namespace RecruitmentsystemAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var jobs = await _db.JobPositions
+                .Include(j => j.Company)
                 .Select(j => new JobPositionResponseDTO
                 {
                     JobId = j.JobId,
@@ -32,6 +33,8 @@ namespace RecruitmentsystemAPI.Controllers
                     Location = j.Location,
                     Type = j.Type,
                     SalaryRange = j.SalaryRange,
+                    CompanyId = j.CompanyId,
+                    CompanyName = j.Company != null ? j.Company.CompanyName : "Not Assigned",
                     CreatedBy = j.CreatedBy,
                     CreatedDate = j.CreatedDate
                 })
@@ -46,6 +49,7 @@ namespace RecruitmentsystemAPI.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var job = await _db.JobPositions
+                .Include(j => j.Company)
                 .Where(j => j.JobId == id)
                 .Select(j => new JobPositionResponseDTO
                 {
@@ -55,6 +59,8 @@ namespace RecruitmentsystemAPI.Controllers
                     Location = j.Location,
                     Type = j.Type,
                     SalaryRange = j.SalaryRange,
+                    CompanyId = j.CompanyId,
+                    CompanyName = j.Company != null ? j.Company.CompanyName : "Not Assigned",
                     CreatedBy = j.CreatedBy,
                     CreatedDate = j.CreatedDate
                 })
@@ -78,6 +84,7 @@ namespace RecruitmentsystemAPI.Controllers
                 Location = dto.Location,
                 Type = dto.Type,
                 SalaryRange = dto.SalaryRange,
+                CompanyId = dto.CompanyId,
                 CreatedBy = dto.CreatedBy,
                 CreatedDate = DateTime.Now
             };
@@ -108,6 +115,7 @@ namespace RecruitmentsystemAPI.Controllers
             existing.Location = dto.Location;
             existing.Type = dto.Type;
             existing.SalaryRange = dto.SalaryRange;
+            existing.CompanyId = dto.CompanyId;
             existing.ModifiedDate = DateTime.Now;
 
             await _db.SaveChangesAsync();
@@ -120,14 +128,31 @@ namespace RecruitmentsystemAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var job = await _db.JobPositions.FindAsync(id);
-            if (job == null)
-                return NotFound(new { message = "Job not found" });
+            try
+            {
+                var job = await _db.JobPositions.FindAsync(id);
+                if (job == null)
+                    return NotFound(new { success = false, message = "Job position not found" });
 
-            _db.JobPositions.Remove(job);
-            await _db.SaveChangesAsync();
+                // Check for related applications (Foreign Key Constraint)
+                var hasApplications = await _db.Applications.AnyAsync(a => a.JobId == id);
+                if (hasApplications)
+                {
+                    return BadRequest(new { 
+                        success = false, 
+                        message = "Cannot delete this job position because it has active job applications. Deactivate it instead." 
+                    });
+                }
 
-            return Ok(new { message = "Job deleted successfully" });
+                _db.JobPositions.Remove(job);
+                await _db.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Job position deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "An error occurred while deleting: " + ex.Message });
+            }
         }
     }
 }

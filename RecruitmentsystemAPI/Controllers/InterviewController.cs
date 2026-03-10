@@ -34,7 +34,21 @@ namespace RecruitmentsystemAPI.Controllers
                     RoundNo = i.RoundNo,
                     Feedback = i.Feedback,
                     Result = i.Result,
-                    CreatedDate = i.CreatedDate
+                    CreatedDate = i.CreatedDate,
+                    CandidateName = _db.Candidates
+                        .Where(c => c.CandidateId == _db.Applications
+                            .Where(a => a.ApplicationId == i.ApplicationId)
+                            .Select(a => a.CandidateId)
+                            .FirstOrDefault())
+                        .Select(c => c.FullName)
+                        .FirstOrDefault(),
+                    JobTitle = _db.JobPositions
+                        .Where(j => j.JobId == _db.Applications
+                            .Where(a => a.ApplicationId == i.ApplicationId)
+                            .Select(a => a.JobId)
+                            .FirstOrDefault())
+                        .Select(j => j.Title)
+                        .FirstOrDefault()
                 })
                 .ToListAsync();
 
@@ -58,7 +72,21 @@ namespace RecruitmentsystemAPI.Controllers
                     RoundNo = i.RoundNo,
                     Feedback = i.Feedback,
                     Result = i.Result,
-                    CreatedDate = i.CreatedDate
+                    CreatedDate = i.CreatedDate,
+                    CandidateName = _db.Candidates
+                        .Where(c => c.CandidateId == _db.Applications
+                            .Where(a => a.ApplicationId == i.ApplicationId)
+                            .Select(a => a.CandidateId)
+                            .FirstOrDefault())
+                        .Select(c => c.FullName)
+                        .FirstOrDefault(),
+                    JobTitle = _db.JobPositions
+                        .Where(j => j.JobId == _db.Applications
+                            .Where(a => a.ApplicationId == i.ApplicationId)
+                            .Select(a => a.JobId)
+                            .FirstOrDefault())
+                        .Select(j => j.Title)
+                        .FirstOrDefault()
                 })
                 .FirstOrDefaultAsync();
 
@@ -70,10 +98,43 @@ namespace RecruitmentsystemAPI.Controllers
 
         // ================= CREATE =================
         [Authorize(Roles = "HR")]
+        //[HttpPost]
+        //public async Task<IActionResult> Create(InterviewCreateDTO dto)
+        //{
+        //    // ✅ FluentValidation auto runs
+
+        //    var interview = new Interview
+        //    {
+        //        ApplicationId = dto.ApplicationId,
+        //        InterviewerId = dto.InterviewerId,
+        //        InterviewDate = dto.InterviewDate,
+        //        Mode = dto.Mode,
+        //        RoundNo = dto.RoundNo,
+        //        Feedback = dto.Feedback,
+        //        Result = "Pending",
+        //        CreatedDate = DateTime.Now
+        //    };
+
+        //    _db.Interviews.Add(interview);
+        //    await _db.SaveChangesAsync();
+
+        //    return Ok(new
+        //    {
+        //        message = "Interview scheduled successfully",
+        //        interviewId = interview.InterviewId
+        //    });
+        //}
         [HttpPost]
         public async Task<IActionResult> Create(InterviewCreateDTO dto)
         {
-            // ✅ FluentValidation auto runs
+            // Check Application exist or not
+            var applicationExists = await _db.Applications
+                .AnyAsync(a => a.ApplicationId == dto.ApplicationId);
+
+            if (!applicationExists)
+            {
+                return BadRequest(new { message = "Invalid ApplicationId. Application does not exist." });
+            }
 
             var interview = new Interview
             {
@@ -96,12 +157,16 @@ namespace RecruitmentsystemAPI.Controllers
                 interviewId = interview.InterviewId
             });
         }
-
         // ================= UPDATE =================
         [Authorize(Roles = "HR")]
         [HttpPut]
         public async Task<IActionResult> Update(InterviewUpdateDTO dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var existing = await _db.Interviews
                 .FirstOrDefaultAsync(i => i.InterviewId == dto.InterviewId);
 
@@ -112,7 +177,7 @@ namespace RecruitmentsystemAPI.Controllers
             existing.Mode = dto.Mode;
             existing.RoundNo = dto.RoundNo;
             existing.Feedback = dto.Feedback;
-            existing.Result = dto.Result;
+            existing.Result = dto.Result.ToString(); // Store as string in DB
             existing.ModifiedDate = DateTime.Now;
 
             await _db.SaveChangesAsync();
@@ -121,7 +186,7 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
         // ================= DELETE =================
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,HR")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

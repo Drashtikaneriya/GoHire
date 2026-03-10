@@ -16,6 +16,8 @@
 
         public string? Feedback { get; set; }
 
+        public string? CandidateName { get; set; }
+        public string? JobTitle { get; set; }
         public string? Result { get; set; }
 
         public DateTime CreatedDate { get; set; }

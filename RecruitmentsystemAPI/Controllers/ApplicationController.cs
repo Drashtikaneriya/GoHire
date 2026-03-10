@@ -20,25 +20,67 @@ namespace RecruitmentsystemAPI.Controllers
             _db = db;
         }
 
-        // GET: api/applications
-        [Authorize(Roles = "Admin,HR")]
+        //// GET: api/applications
+        //[Authorize(Roles = "Admin,HR")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    try
+        //    {
+        //        var applications = await _db.Applications
+        //            .Include(a => a.JobPosition)
+        //            .Include(a => a.Candidate)
+        //            .ToListAsync();
+
+        //        return Ok(applications);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { message = "Error getting applications", error = ex.Message });
+        //    }
+        //}
+
         [HttpGet]
+        [Authorize(Roles = "Admin,HR")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
                 var applications = await _db.Applications
-                    .Include(a => a.JobPosition)
-                    .Include(a => a.Candidate)
+                    .Select(a => new ApplicationResponseDTO
+                    {
+                        ApplicationId = a.ApplicationId,
+                        JobId = a.JobId,
+                        JobTitle = _db.JobPositions
+                            .Where(j => j.JobId == a.JobId)
+                            .Select(j => j.Title)
+                            .FirstOrDefault(),
+
+                        CandidateId = a.CandidateId,
+                        CandidateName = _db.Candidates
+                            .Where(c => c.CandidateId == a.CandidateId)
+                            .Select(c => c.FullName)
+                            .FirstOrDefault(),
+
+                        Status = a.Status ?? "Applied",
+                        HRNotes = a.HRNotes,
+                        AppliedOn = a.AppliedOn,
+                        ModifiedDate = a.ModifiedDate
+                    })
                     .ToListAsync();
 
                 return Ok(applications);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error getting applications", error = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = "Error getting applications",
+                    error = ex.Message
+                });
             }
         }
+
 
         // GET: api/applications/5
         [Authorize(Roles = "Admin,HR,Candidate")]
@@ -48,9 +90,26 @@ namespace RecruitmentsystemAPI.Controllers
             try
             {
                 var application = await _db.Applications
-                    .Include(a => a.JobPosition)
-                    .Include(a => a.Candidate)
-                    .FirstOrDefaultAsync(a => a.ApplicationId == id);
+                    .Where(a => a.ApplicationId == id)
+                    .Select(a => new ApplicationResponseDTO
+                    {
+                        ApplicationId = a.ApplicationId,
+                        JobId         = a.JobId,
+                        JobTitle      = _db.JobPositions
+                                            .Where(j => j.JobId == a.JobId)
+                                            .Select(j => j.Title)
+                                            .FirstOrDefault(),
+                        CandidateId   = a.CandidateId,
+                        CandidateName = _db.Candidates
+                                            .Where(c => c.CandidateId == a.CandidateId)
+                                            .Select(c => c.FullName)
+                                            .FirstOrDefault(),
+                        Status        = a.Status ?? "Applied",
+                        HRNotes       = a.HRNotes,
+                        AppliedOn     = a.AppliedOn,
+                        ModifiedDate  = a.ModifiedDate
+                    })
+                    .FirstOrDefaultAsync();
 
                 if (application == null)
                     return NotFound(new { message = "Application not found" });
@@ -91,26 +150,37 @@ namespace RecruitmentsystemAPI.Controllers
         }
 
 
-        // PUT: api/applications/5
-        [Authorize(Roles = "HR")]
+        // PUT: api/applications/5  ← HR updates Status and HRNotes only
+        [Authorize(Roles = "Admin,HR")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Application application)
+        public async Task<IActionResult> Update(int id, [FromBody] ApplicationUpdateDTO dto)
         {
             try
             {
+                // Route id must match body ApplicationId (if provided)
+                if (dto.ApplicationId != 0 && dto.ApplicationId != id)
+                    return BadRequest(new { message = "Application ID mismatch between route and body." });
+
                 var existing = await _db.Applications.FindAsync(id);
                 if (existing == null)
                     return NotFound(new { message = "Application not found" });
 
-                existing.JobId = application.JobId;
-                existing.CandidateId = application.CandidateId;
-                existing.Status = application.Status;
-                existing.HRNotes = application.HRNotes;
+                // Only update the HR-controlled fields
+                if (!string.IsNullOrWhiteSpace(dto.Status))
+                    existing.Status = dto.Status;
+
+                existing.HRNotes     = dto.HRNotes;  // allow clearing notes
                 existing.ModifiedDate = DateTime.Now;
 
                 await _db.SaveChangesAsync();
 
-                return Ok(existing);
+                return Ok(new
+                {
+                    message        = "Application updated successfully",
+                    applicationId  = existing.ApplicationId,
+                    status         = existing.Status,
+                    modifiedDate   = existing.ModifiedDate
+                });
             }
             catch (Exception ex)
             {

@@ -13,5 +13,7 @@
         public string? Type { get; set; }
 
         public string? SalaryRange { get; set; }
+
+        public int CompanyId { get; set; }
     }
 }

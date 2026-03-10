@@ -87,17 +87,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Application"
+                "$ref": "#/components/schemas/ApplicationUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Application"
+                "$ref": "#/components/schemas/ApplicationUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Application"
+                "$ref": "#/components/schemas/ApplicationUpdateDTO"
               }
             }
           }
@@ -927,52 +927,6 @@
   },
   "components": {
     "schemas": {
-      "Application": {
-        "required": [
-          "candidateId",
-          "jobId"
-        ],
-        "type": "object",
-        "properties": {
-          "applicationId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "jobId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "candidateId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "hrNotes": {
-            "type": "string",
-            "nullable": true
-          },
-          "appliedOn": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "jobPosition": {
-            "$ref": "#/components/schemas/JobPosition"
-          },
-          "candidate": {
-            "$ref": "#/components/schemas/Candidate"
-          }
-        },
-        "additionalProperties": false
-      },
       "ApplicationCreateDTO": {
         "required": [
           "candidateId",
@@ -1000,41 +954,21 @@
         },
         "additionalProperties": false
       },
-      "Candidate": {
-        "required": [
-          "email",
-          "fullName"
-        ],
+      "ApplicationUpdateDTO": {
         "type": "object",
         "properties": {
-          "candidateId": {
+          "applicationId": {
             "type": "integer",
             "format": "int32"
           },
-          "fullName": {
-            "maxLength": 150,
-            "minLength": 1,
-            "type": "string"
-          },
-          "email": {
-            "maxLength": 150,
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
-          },
-          "phone": {
-            "maxLength": 20,
+          "status": {
+            "maxLength": 50,
             "type": "string",
             "nullable": true
           },
-          "resumePath": {
-            "maxLength": 300,
+          "hrNotes": {
             "type": "string",
             "nullable": true
-          },
-          "appliedDate": {
-            "type": "string",
-            "format": "date-time"
           },
           "modifiedDate": {
             "type": "string",
@@ -1142,7 +1076,20 @@
         },
         "additionalProperties": false
       },
+      "InterviewResult": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "InterviewUpdateDTO": {
+        "required": [
+          "interviewId",
+          "result"
+        ],
         "type": "object",
         "properties": {
           "interviewId": {
@@ -1167,62 +1114,7 @@
             "nullable": true
           },
           "result": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "JobPosition": {
-        "required": [
-          "createdBy",
-          "title"
-        ],
-        "type": "object",
-        "properties": {
-          "jobId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "maxLength": 200,
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "location": {
-            "maxLength": 150,
-            "type": "string",
-            "nullable": true
-          },
-          "type": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "salaryRange": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "createdBy": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "$ref": "#/components/schemas/InterviewResult"
           }
         },
         "additionalProperties": false
@@ -1249,6 +1141,10 @@
           "salaryRange": {
             "type": "string",
             "nullable": true
+          },
+          "companyId": {
+            "type": "integer",
+            "format": "int32"
           },
           "createdBy": {
             "type": "integer",
@@ -1283,6 +1179,10 @@
           "salaryRange": {
             "type": "string",
             "nullable": true
+          },
+          "companyId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1296,39 +1196,6 @@
           },
           "password": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Role": {
-        "required": [
-          "roleName"
-        ],
-        "type": "object",
-        "properties": {
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "roleName": {
-            "maxLength": 50,
-            "minLength": 1,
-            "type": "string"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "users": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
             "nullable": true
           }
         },
@@ -1363,53 +1230,6 @@
             "maxLength": 50,
             "minLength": 1,
             "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "User": {
-        "required": [
-          "email",
-          "password",
-          "userName"
-        ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userName": {
-            "maxLength": 150,
-            "minLength": 1,
-            "type": "string"
-          },
-          "email": {
-            "maxLength": 150,
-            "minLength": 1,
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "maxLength": 300,
-            "minLength": 1,
-            "type": "string"
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modifiedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "role": {
-            "$ref": "#/components/schemas/Role"
           }
         },
         "additionalProperties": false

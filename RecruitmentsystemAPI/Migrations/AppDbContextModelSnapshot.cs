@@ -46,7 +46,6 @@ namespace RecruitmentsystemAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -197,6 +196,9 @@ namespace RecruitmentsystemAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobId"));
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
@@ -227,6 +229,8 @@ namespace RecruitmentsystemAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("JobId");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("CreatedBy");
 
@@ -336,11 +340,19 @@ namespace RecruitmentsystemAPI.Migrations
 
             modelBuilder.Entity("RecruitmentsystemAPI.Models.JobPosition", b =>
                 {
+                    b.HasOne("RecruitmentsystemAPI.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RecruitmentsystemAPI.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("User");
                 });
