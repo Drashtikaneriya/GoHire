@@ -2,129 +2,115 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="container-fluid">
-    <div class="mb-4">
-        <h3 class="fw-bold">Dashboard Overview</h3>
-        <p class="text-muted">Welcome to the GoHire administrative control panel.</p>
-    </div>
-
-    <div class="row g-4 mb-5">
-        <div class="col-xl-3 col-md-6">
-            <div class="card kpi-card bg-white p-3">
-                <div class="d-flex align-items-center">
-                    <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3 text-primary">
-                        <i class="bi bi-people-fill fs-3"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted d-block mb-1">Total Users</small>
-                        <h3 class="fw-bold mb-0">1,284</h3>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid p-0 animate__animated animate__fadeIn">
+    <!-- Header -->
+    <div class="admin-header d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1 text-dark">
+                <i class="bi bi-shield-lock-fill text-primary me-2"></i>Admin Dashboard
+            </h2>
+            <p class="text-muted mb-0">System Overview & Statistics</p>
         </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card kpi-card bg-white p-3" style="border-left-color: #198754;">
-                <div class="d-flex align-items-center">
-                    <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3 text-success">
-                        <i class="bi bi-shield-check fs-3"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted d-block mb-1">Total Roles</small>
-                        <h3 class="fw-bold mb-0">12</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card kpi-card bg-white p-3" style="border-left-color: #ffc107;">
-                <div class="d-flex align-items-center">
-                    <div class="bg-warning bg-opacity-10 p-3 rounded-3 me-3 text-warning">
-                        <i class="bi bi-briefcase fs-3"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted d-block mb-1">Open Jobs</small>
-                        <h3 class="fw-bold mb-0">45</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card kpi-card bg-white p-3" style="border-left-color: #0dcaf0;">
-                <div class="d-flex align-items-center">
-                    <div class="bg-info bg-opacity-10 p-3 rounded-3 me-3 text-info">
-                        <i class="bi bi-file-earmark-text fs-3"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted d-block mb-1">Total Apps</small>
-                        <h3 class="fw-bold mb-0">892</h3>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <span class="badge bg-white text-dark shadow-sm px-3 py-2 border">
+                <i class="bi bi-calendar3 me-2"></i><span id="currentDate"></span>
+            </span>
         </div>
     </div>
 
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="card bg-white border-0 shadow-sm">
-                <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0 fw-bold">Recent User Activity</h5>
-                    <button class="btn btn-light btn-sm">View All</button>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th class="ps-3">User</th>
-                                    <th>Action</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="ps-3"><span class="fw-semibold">John Doe</span></td>
-                                    <td>Updated Profile</td>
-                                    <td>2 min ago</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success">Success</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-3"><span class="fw-semibold">Jane Smith</span></td>
-                                    <td>New Registration</td>
-                                    <td>15 min ago</td>
-                                    <td><span class="badge bg-success bg-opacity-10 text-success">Success</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-3"><span class="fw-semibold">Mike Johnson</span></td>
-                                    <td>Password Reset</td>
-                                    <td>1 hour ago</td>
-                                    <td><span class="badge bg-warning bg-opacity-10 text-warning">Pending</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <!-- Stat Cards -->
+    <div class="row g-4 mb-4">
+        
+        <!-- Total Users -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card shadow-sm border-0 h-100 p-3 card-blue hover-zoom">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted fw-semibold text-uppercase mb-1 small">Total Users</p>
+                        <h3 class="fw-bold mb-0 text-dark" id="usersCount"><span class="spinner-border spinner-border-sm text-primary"></span></h3>
+                    </div>
+                    <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-person-badge-fill fs-4"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card bg-white border-0 shadow-sm">
-                <div class="card-header bg-white border-bottom p-3">
-                    <h5 class="mb-0 fw-bold">System Alerts</h5>
+
+        <!-- Total Jobs -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card shadow-sm border-0 h-100 p-3 card-success hover-zoom">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted fw-semibold text-uppercase mb-1 small">Total Jobs</p>
+                        <h3 class="fw-bold mb-0 text-dark" id="jobsCount"><span class="spinner-border spinner-border-sm text-success"></span></h3>
+                    </div>
+                    <div class="icon-box bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-briefcase-fill fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Candidates -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card shadow-sm border-0 h-100 p-3 card-purple hover-zoom">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted fw-semibold text-uppercase mb-1 small">Total Candidates</p>
+                        <h3 class="fw-bold mb-0 text-dark" id="candidatesCount"><span class="spinner-border spinner-border-sm text-purple"></span></h3>
+                    </div>
+                    <div class="icon-box bg-purple bg-opacity-10 text-purple">
+                        <i class="bi bi-people-fill fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Applications -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card shadow-sm border-0 h-100 p-3 card-info hover-zoom">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted fw-semibold text-uppercase mb-1 small">Total Applications</p>
+                        <h3 class="fw-bold mb-0 text-dark" id="applicationsCount"><span class="spinner-border spinner-border-sm text-info"></span></h3>
+                    </div>
+                    <div class="icon-box bg-info bg-opacity-10 text-info">
+                        <i class="bi bi-file-earmark-person-fill fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Interviews -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card stat-card shadow-sm border-0 h-100 p-3 card-warning hover-zoom">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="text-muted fw-semibold text-uppercase mb-1 small">Total Interviews</p>
+                        <h3 class="fw-bold mb-0 text-dark" id="interviewsCount"><span class="spinner-border spinner-border-sm text-warning"></span></h3>
+                    </div>
+                    <div class="icon-box bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-calendar-check-fill fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Quick Links Row -->
+    <div class="row g-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                    <h5 class="fw-bold"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Quick Management Links</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex gap-3 mb-3">
-                        <div class="text-warning"><i class="bi bi-exclamation-triangle-fill fs-4"></i></div>
-                        <div>
-                            <h6 class="mb-1">Memory Usage High</h6>
-                            <small class="text-muted">Usage exceeded 85% at 4:30 PM</small>
-                        </div>
-                    </div>
-                    <div class="d-flex gap-3">
-                        <div class="text-primary"><i class="bi bi-info-circle-fill fs-4"></i></div>
-                        <div>
-                            <h6 class="mb-1">API Sync Complete</h6>
-                            <small class="text-muted">Job positions updated successfully</small>
-                        </div>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/Admin/Users" class="btn btn-outline-primary rounded-pill px-4"><i class="bi bi-person-lines-fill me-2"></i>Manage Users</a>
+                        <a href="/Admin/Roles" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-shield-lock me-2"></i>Manage Roles</a>
+                        <a href="/Admin/Companies" class="btn btn-outline-dark rounded-pill px-4"><i class="bi bi-building me-2"></i>Manage Companies</a>
+                        <a href="/Admin/JobPositions" class="btn btn-outline-success rounded-pill px-4"><i class="bi bi-briefcase me-2"></i>View Jobs</a>
                     </div>
                 </div>
             </div>
@@ -132,3 +118,114 @@
     </div>
 </div>
 
+<style>
+    /* Styling for Admin Dashboard */
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .stat-card {
+        border-radius: 16px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-zoom:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+    /* Dynamic border colors */
+    .card-blue { border-bottom: 4px solid #0d6efd !important; }
+    .card-success { border-bottom: 4px solid #198754 !important; }
+    .card-purple { border-bottom: 4px solid #6f42c1 !important; }
+    .card-info { border-bottom: 4px solid #0dcaf0 !important; }
+    .card-warning { border-bottom: 4px solid #ffc107 !important; }
+    
+    .bg-purple { background-color: #6f42c1; }
+    .text-purple { color: #6f42c1; }
+</style>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+            // Fetch list APIs in parallel and calculate data.length
+            fetchDashboardCounts();
+        });
+
+        async function fetchDashboardCounts() {
+            try {
+                // We fire all requests simultaneously
+                const endpoints = [
+                    { id: 'usersCount', url: '/Admin/Dashboard/GetUsersList' },
+                    { id: 'jobsCount', url: '/Admin/Dashboard/GetJobsList' },
+                    { id: 'candidatesCount', url: '/Admin/Dashboard/GetCandidatesList' },
+                    { id: 'applicationsCount', url: '/Admin/Dashboard/GetApplicationsList' },
+                    { id: 'interviewsCount', url: '/Admin/Dashboard/GetInterviewsList' }
+                ];
+
+                endpoints.forEach(async (endpoint) => {
+                    try {
+                        const response = await fetch(endpoint.url);
+                        if (!response.ok) throw new Error("HTTP " + response.status);
+                        
+                        const data = await response.json();
+                        
+                        // Apply animation and data.length
+                        // Some endpoints might return `{ data: [...] }` if not constructed plainly, 
+                        // but our endpoints return standard JSON array (or potentially an object depending on what _apiService.GetAsync returns).
+                        // Usually, _apiService.GetAsync<List<T>> returns a pure array.
+                        
+                        let length = 0;
+                        if (Array.isArray(data)) {
+                            length = data.length;
+                        } else if (data && Array.isArray(data.data)) {
+                            length = data.data.length;
+                        } else if (data && data.$values && Array.isArray(data.$values)) {
+                            length = data.$values.length; // Handle potential JSON .NET reference preservation
+                        }
+
+                        animateValue(endpoint.id, 0, length, 1000);
+                        
+                    } catch (err) {
+                        console.error("Failed to fetch from " + endpoint.url, err);
+                        document.getElementById(endpoint.id).innerHTML = `<span class="text-danger fs-6" title="${err.message}"><i class="bi bi-exclamation-triangle"></i> Err</span>`;
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+                toastr.error("Could not load some dashboard statistics.");
+            }
+        }
+
+        // Helper to animate numbers counting up
+        function animateValue(objId, start, end, duration) {
+            let obj = document.getElementById(objId);
+            if (!obj) return;
+            if (end === 0) {
+                obj.textContent = "0";
+                return;
+            }
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Ease out
+                const currentValue = Math.floor(progress * (end - start) + start);
+                obj.textContent = currentValue;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.textContent = end;
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+}
