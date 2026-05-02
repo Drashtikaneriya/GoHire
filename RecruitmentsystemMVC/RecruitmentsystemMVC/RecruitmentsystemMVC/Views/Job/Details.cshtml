@@ -1,0 +1,91 @@
+@model RecruitmentsystemMVC.Models.DTOs.JobDTO
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="mb-4">
+            <a asp-action="Index" class="btn btn-sm btn-white border shadow-none mb-3"><i class="bi bi-arrow-left me-2"></i>Back to List</a>
+            <div class="d-flex justify-content-between align-items-start">
+               <div>
+                   <h2 class="fw-bold mb-1">@Model.Title</h2>
+                   <div class="d-flex align-items-center gap-3 text-muted">
+                        <span><i class="bi bi-building me-1"></i> @Model.CompanyName</span>
+                        <span><i class="bi bi-geo-alt me-1"></i> @Model.Location</span>
+                        <span class="badge bg-primary bg-opacity-10 text-primary">@Model.EmploymentType</span>
+                   </div>
+               </div>
+               <div class="d-flex gap-2">
+
+                   <button class="btn btn-danger px-4" onclick="deleteJob(@Model.Id)"><i class="bi bi-trash me-2"></i>Delete</button>
+               </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-8">
+                <div class="card p-4 border-0 shadow-sm rounded-4 mb-4">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Job Description</h5>
+                    <p class="text-secondary" style="white-space: pre-line;">@Model.Description</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 border-0 shadow-sm rounded-4 mb-4">
+                    <h5 class="fw-bold mb-4">Quick Stats</h5>
+                    <div class="mb-3">
+                        <label class="text-muted small d-block">Monthly Salary Range</label>
+                        <span class="fw-bold fs-5 text-dark">$@Model.SalaryMin.ToString("N0") - $@Model.SalaryMax.ToString("N0")</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small d-block">Closing Date</label>
+                        <span class="fw-medium text-danger"><i class="bi bi-calendar-x me-1"></i> @(Model.ClosingDate?.ToString("MMM dd, yyyy") ?? "Not Specified")</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small d-block">Employment Type</label>
+                        <span class="fw-medium">@Model.EmploymentType</span>
+                    </div>
+                </div>
+
+                <div class="card p-4 border-0 shadow-sm rounded-4 bg-primary text-white">
+                    <h6 class="fw-bold mb-2">Want to apply?</h6>
+                    <p class="small opacity-75 mb-3">Copy this link and share with candidates to start receiving applications.</p>
+                    <button class="btn btn-white btn-sm w-100 fw-bold" onclick="copyLink()">Copy Job Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-white { background: #fff; color: #1e293b; }
+    .btn-white:hover { background: #f8f9fa; }
+</style>
+
+@section Scripts {
+    <script>
+        function deleteJob(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Deleting this job will also remove related candidate applications!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/Job/Delete/' + id, function(res) {
+                        if (res.success) window.location.href = '/Job';
+                        else Swal.fire('Error', res.message, 'error');
+                    });
+                }
+            });
+        }
+        function copyLink() {
+            const url = window.location.origin + '/Job/Browse';
+            navigator.clipboard.writeText(url);
+            Swal.fire({ title: 'Copied!', text: 'Job link copied to clipboard.', icon: 'success', timer: 1000, showConfirmButton: false });
+        }
+    </script>
+}

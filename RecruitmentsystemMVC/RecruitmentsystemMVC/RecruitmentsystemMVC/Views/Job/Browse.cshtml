@@ -1,0 +1,127 @@
+@model List<RecruitmentsystemMVC.Models.DTOs.JobDTO>
+@{
+    ViewData["Title"] = "Open Positions";
+}
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h3 class="fw-bold">Explore Careers</h3>
+        <p class="text-muted">Discover roles that match your passion</p>
+    </div>
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control border-start-0" placeholder="Search jobs...">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var job in Model)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <img src="https://ui-avatars.com/api/?name=@job.CompanyName&background=f1f5f9&color=2563eb&bold=true" class="rounded" width="48" height="48">
+                    <span class="badge bg-primary bg-opacity-10 text-primary">@job.EmploymentType</span>
+                </div>
+                <h5 class="fw-bold mb-1">@job.Title</h5>
+                <p class="text-muted small mb-3">@job.CompanyName • @job.Location</p>
+                <p class="text-secondary small mb-4 text-truncate-2" style="height: 3rem; overflow: hidden;">@job.Description</p>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-dark">$@job.SalaryMin.ToString("N0") - $@job.SalaryMax.ToString("N0")</span>
+                    <button class="btn btn-primary btn-sm px-4" onclick="applyJob(@job.Id)">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        async function applyJob(jobId) {
+            const candidateId = "@Context.Session.GetString("UserId")";
+            const userRole = "@Context.Session.GetString("UserRole")";
+
+            if (!candidateId || (userRole !== "Candidate" && userRole !== "CANDIDATE")) {
+                Swal.fire({
+                    title: 'Login Required',
+                    text: 'Please login as a candidate to apply for this position.',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login Now',
+                    cancelButtonText: 'Maybe later',
+                    confirmButtonColor: '#6366f1'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/Account/Login';
+                    }
+                });
+                return;
+            }
+
+            const { value: file } = await Swal.fire({
+                title: 'Apply for Position',
+                text: 'Select your resume (optional)',
+                input: 'file',
+                inputAttributes: {
+                    'accept': '.pdf,.doc,.docx',
+                    'aria-label': 'Upload your resume'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit Application',
+                confirmButtonColor: '#6366f1'
+            });
+
+            const formData = new FormData();
+            formData.append('jobId', jobId);
+            formData.append('candidateId', candidateId);
+            if (file) {
+                formData.append('resumeFile', file);
+            }
+
+            Swal.fire({
+                title: 'Submitting...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            $.ajax({
+                url: '/Application/Apply',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    if (res.success) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: res.message || 'Your application has been submitted successfully.',
+                            icon: 'success',
+                            confirmButtonColor: '#6366f1'
+                        }).then(() => {
+                            window.location.href = '/Application/MyApplications';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Application Failed',
+                            text: res.message || 'Unable to submit application at this moment.',
+                            icon: 'error',
+                            confirmButtonColor: '#ef4444'
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'An unexpected error occurred. Please try again.',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444'
+                    });
+                }
+            });
+        }
+    </script>
+}

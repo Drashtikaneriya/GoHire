@@ -1,111 +1,88 @@
-﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RecruitmentsystemMVC.Models;
-using System.Text;
-using System.Text.Json;
+using RecruitmentsystemMVC.Models.DTOs;
+using RecruitmentsystemMVC.Services;
 
 namespace RecruitmentsystemMVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IHttpClientFactory _clientFactory;
-        private readonly IConfiguration _config;
-        private readonly string _baseUrl;
+        private readonly AuthService _authService;
 
-        public AccountController(IHttpClientFactory clientFactory, IConfiguration config)
+        public AccountController(AuthService authService)
         {
-            _clientFactory = clientFactory;
-            _config = config;
-            _baseUrl = "https://localhost:7272/api/"; // Base URL as per requirement
+            _authService = authService;
         }
 
         [HttpGet]
         public IActionResult Login()
         {
-            if (HttpContext.Session.GetString("JWToken") != null)
+            if (HttpContext.Session.GetString("JWTToken") != null)
             {
-                var role = HttpContext.Session.GetString("UserRole");
-                return RedirectToDashboard(role);
+                return RedirectToAction("Index", "Dashboard");
             }
             return View();
         }
 
         [HttpPost]
-      
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginDTO loginDto)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            if (!ModelState.IsValid) return View(loginDto);
 
-            var client = _clientFactory.CreateClient();
-
-            var requestDto = new LoginRequestDTO
+            var response = await _authService.LoginAsync(loginDto);
+            if (response != null)
             {
-                UserName = model.UserName,
-                Password = model.Password
-            };
-
-            var json = JsonSerializer.Serialize(requestDto);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await client.PostAsync(_baseUrl + "auth/login", content);
-
-                if (!response.IsSuccessStatusCode)
+                HttpContext.Session.SetString("JWTToken", response.Token ?? "");
+                
+                // Fetch full user details from /auth/me
+                var me = await _authService.GetMeAsync();
+                if (me != null)
                 {
-                    ViewBag.Error = "Invalid username or password";
-                    return View(model);
+                    HttpContext.Session.SetString("UserRole", me.Role ?? "");
+                    HttpContext.Session.SetString("UserId", me.UserId.ToString());
+                    HttpContext.Session.SetString("UserName", me.FullName ?? me.Name ?? me.UserName ?? "User");
+                    HttpContext.Session.SetString("UserEmail", me.Email ?? "");
+                }
+                else
+                {
+                    // Fallback to login response data
+                    HttpContext.Session.SetString("UserRole", response.Role ?? "");
+                    HttpContext.Session.SetString("UserId", response.UserId.ToString());
+                    HttpContext.Session.SetString("UserName", response.FullName ?? response.Name ?? response.UserName ?? "User");
                 }
 
-                var responseJson = await response.Content.ReadAsStringAsync();
-                var loginResponse = JsonSerializer.Deserialize<LoginResponseDTO>(responseJson,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                if (loginResponse != null)
-                {
-                    // 🔐 Store in Session
-                    HttpContext.Session.SetString("JWToken", loginResponse.Token);
-                    HttpContext.Session.SetString("UserRole", loginResponse.Role);
-                    HttpContext.Session.SetString("UserName", loginResponse.UserName);
-                    HttpContext.Session.SetInt32("UserId", loginResponse.UserId);
-
-                    // 🚀 Role Wise Redirect
-                    return RedirectToDashboard(loginResponse.Role);
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "API Connection Error: " + ex.Message;
+                return RedirectToAction("Index", "Dashboard");
             }
 
-            return View(model);
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(loginDto);
         }
 
-        private IActionResult RedirectToDashboard(string role)
+        [HttpGet]
+        public IActionResult Register()
         {
-            return role switch
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterDTO registerDto)
+        {
+            if (!ModelState.IsValid) return View(registerDto);
+
+            var success = await _authService.RegisterAsync(registerDto);
+            if (success)
             {
-                "Admin" => RedirectToAction("Index", "Dashboard", new { area = "Admin" }),
-                "HR" => RedirectToAction("Index", "Dashboard", new { area = "HR" }),
-                "Candidate" => RedirectToAction("Index", "Dashboard", new { area = "Candidate" }),
-                _ => RedirectToAction("Login")
-            };
+                TempData["SuccessMessage"] = "Registration successful! Please login.";
+                return RedirectToAction("Login");
+            }
+
+            ModelState.AddModelError("", "Registration failed. Email might already exist.");
+            return View(registerDto);
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            // 1. Clear Session
-            HttpContext.Session.Clear();
-
-            // 2. Prevent Caching of this response (optional but good practice)
-            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
-            Response.Headers["Pragma"] = "no-cache";
-            Response.Headers["Expires"] = "0";
-
-            // 3. Redirect to Login
+            await _authService.LogoutAsync();
             return RedirectToAction("Login");
         }
     }
 }
-

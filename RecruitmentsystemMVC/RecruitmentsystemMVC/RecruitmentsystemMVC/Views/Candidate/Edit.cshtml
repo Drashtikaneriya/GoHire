@@ -1,0 +1,49 @@
+@model RecruitmentsystemMVC.Models.DTOs.UserDTO
+@{
+    ViewData["Title"] = "Update Candidate Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+            <div class="d-flex align-items-center mb-4">
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary rounded-circle me-3" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <h4 class="fw-bold mb-0">Edit Candidate: @Model.FullName</h4>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FullName" class="form-label fw-semibold">Full Name</label>
+                    <input asp-for="FullName" class="form-control" required>
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label fw-semibold">Email (Read-only)</label>
+                    <input asp-for="Email" type="email" class="form-control bg-light" readonly>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Phone" class="form-label fw-semibold">Phone Number</label>
+                    <input asp-for="Phone" class="form-control">
+                    <span asp-validation-for="Phone" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <input type="hidden" asp-for="IsActive" />
+                </div>
+
+                <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-light px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

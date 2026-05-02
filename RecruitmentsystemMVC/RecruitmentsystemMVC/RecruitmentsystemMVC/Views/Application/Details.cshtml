@@ -1,0 +1,222 @@
+@model RecruitmentsystemMVC.Models.DTOs.ApplicationDTO
+@inject RecruitmentsystemMVC.Helpers.RoleHelper RoleHelper
+@{
+    ViewData["Title"] = "Application Review";
+    var interviews = ViewBag.Interviews as List<RecruitmentsystemMVC.Models.DTOs.InterviewDTO> ?? new List<RecruitmentsystemMVC.Models.DTOs.InterviewDTO>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-header bg-white py-3 border-bottom-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="fw-bold mb-1">Application Details</h4>
+                        <p class="text-muted small mb-0">Submitted on @Model.AppliedDate.ToString("MMMM dd, yyyy")</p>
+                    </div>
+                    <div id="statusBadgeContainer">
+                        @if (Model.Status == "Pending")
+                        {
+                            <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 rounded-pill">Pending Review</span>
+                        }
+                        else if (Model.Status == "Accepted" || Model.Status == "Shortlisted")
+                        {
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">@Model.Status</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-2 rounded-pill">@Model.Status</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <label class="text-muted small d-block mb-1 text-uppercase fw-bold">Position Applied</label>
+                            <h6 class="fw-bold mb-0">@Model.JobTitle</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <label class="text-muted small d-block mb-1 text-uppercase fw-bold">Candidate</label>
+                            <h6 class="fw-bold mb-0">@Model.CandidateName</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h6 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Resume / CV
+                    </h6>
+                    <div class="border rounded-3 p-3 d-flex align-items-center justify-content-between bg-white shadow-sm">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-3 bg-danger bg-opacity-10 p-2 me-3">
+                                <i class="bi bi-file-pdf fs-4 text-danger"></i>
+                            </div>
+                            <div>
+                                <div class="fw-medium">Resume_@(Model.CandidateName?.Replace(" ", "_")).pdf</div>
+                                <div class="text-muted small">Standard PDF Document</div>
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.ResumeUrl))
+                        {
+                            <a href="@Model.ResumeUrl" target="_blank" class="btn btn-sm btn-outline-primary px-4 rounded-3 hov-lift">
+                                <i class="bi bi-eye me-1"></i> View
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill small italic">Not Uploaded</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- Interview Feedback Section for HR & Admin -->
+                @if (RoleHelper.IsHR() || RoleHelper.IsAdmin())
+                {
+                    <div class="mb-5">
+                        <h6 class="fw-bold mb-3 d-flex align-items-center">
+                            <i class="bi bi-chat-quote me-2 text-primary"></i> Assessment Feedback
+                        </h6>
+                        
+                        @if (interviews.Any(i => !string.IsNullOrEmpty(i.Feedback)))
+                        {
+                            <div class="list-group list-group-flush border rounded-3 shadow-sm overflow-hidden">
+                                @foreach (var inv in interviews.Where(i => !string.IsNullOrEmpty(i.Feedback)))
+                                {
+                                    <div class="list-group-item p-3 border-bottom">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <span class="fw-bold text-dark">@inv.InterviewerName</span>
+                                                <span class="text-muted small mx-2">•</span>
+                                                <span class="badge bg-light text-dark border small">@inv.RoundName</span>
+                                            </div>
+                                            <span class="text-muted small">@inv.InterviewDate.ToString("MMM dd, yyyy")</span>
+                                        </div>
+                                        <p class="mb-0 text-secondary small" style="white-space: pre-wrap;">@inv.Feedback</p>
+                                        @if (!string.IsNullOrEmpty(inv.Result))
+                                        {
+                                            <div class="mt-2">
+                                                <span class="small text-muted">Recommendation: </span>
+                                                <span class="badge @(inv.Result == "Passed" || inv.Result == "Selected" ? "bg-success" : "bg-danger") bg-opacity-10 @(inv.Result == "Passed" || inv.Result == "Selected" ? "text-success" : "text-danger") small px-2">@inv.Result</span>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4 bg-light rounded-3 border">
+                                <i class="bi bi-chat-dots fs-3 text-muted opacity-50 mb-2 d-block"></i>
+                                <p class="text-muted small mb-0">No assessment feedback has been recorded yet.</p>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <!-- Scheduled Interviews Section (Visible to both) -->
+                <div class="mb-4">
+                    <h6 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="bi bi-calendar-check me-2 text-success"></i> Interview Timeline
+                    </h6>
+                    @if (interviews.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle border rounded-3 overflow-hidden">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="ps-3 border-0">Round</th>
+                                        <th class="border-0">Date</th>
+                                        <th class="border-0">Interviewer</th>
+                                        <th class="border-0 text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var inv in interviews)
+                                    {
+                                        <tr>
+                                            <td class="ps-3"><span class="fw-medium">@inv.RoundName</span></td>
+                                            <td class="small">@inv.InterviewDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                            <td class="small">@inv.InterviewerName</td>
+                                            <td class="text-center">
+                                                @if (string.IsNullOrEmpty(inv.Result) || inv.Result == "Pending")
+                                                {
+                                                    <span class="badge bg-warning text-dark small">Pending</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success small">@inv.Result</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted small">No interviews have been scheduled for this application.</p>
+                    }
+                </div>
+            </div>
+
+            <div class="card-footer bg-light py-3 px-4 border-top-0 d-flex justify-content-between align-items-center">
+                <a asp-action="@(RoleHelper.IsCandidate() ? "MyApplications" : "Index")" class="btn btn-link text-muted p-0 text-decoration-none">
+                    <i class="bi bi-arrow-left me-1"></i> Back to List
+                </a>
+                
+                @if (RoleHelper.IsAdmin() || RoleHelper.IsHR())
+                {
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-danger btn-sm px-4 rounded-3" onclick="updateStatus('Rejected')">
+                            <i class="bi bi-x-circle me-1"></i> Reject
+                        </button>
+                        <button class="btn btn-outline-success btn-sm px-4 rounded-3" onclick="updateStatus('Shortlisted')">
+                            <i class="bi bi-check-circle me-1"></i> Shortlist
+                        </button>
+                        <a asp-controller="Interview" asp-action="Schedule" class="btn btn-primary btn-sm px-4 rounded-3">
+                            <i class="bi bi-calendar-plus me-1"></i> Schedule Interview
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hov-lift:hover { transform: translateY(-1px); transition: all 0.2s; }
+</style>
+
+@section Scripts {
+    <script>
+        function updateStatus(status) {
+            Swal.fire({
+                title: 'Update Status?',
+                text: "Move application to " + status + " status?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: status === 'Rejected' ? '#dc3545' : '#198754',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, ' + status
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const action = status === 'Shortlisted' ? 'Shortlist' : 'Reject';
+                    $.post('/Application/' + action + '/' + @Model.Id, function(res) {
+                        if (res.success) {
+                            Swal.fire({ title: 'Updated!', text: 'Application status changed.', icon: 'success', timer: 1000, showConfirmButton: false })
+                                .then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', 'Failed to update application status.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

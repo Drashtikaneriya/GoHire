@@ -1,9 +1,11 @@
+using RecruitmentsystemMVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// 🚀 Add HttpClient with SSL Bypass
+// 🚀 Configure HttpClient with SSL Bypass for Local Development
 builder.Services.AddHttpClient("RecruitmentAPI").ConfigurePrimaryHttpMessageHandler(() => 
 {
     return new HttpClientHandler
@@ -11,17 +13,36 @@ builder.Services.AddHttpClient("RecruitmentAPI").ConfigurePrimaryHttpMessageHand
         ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
     };
 });
-builder.Services.AddHttpClient(); // Keep default for other needs
 
-// 🚀 Add HttpClient
-
+// Register custom services with named HttpClient
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<RecruitmentsystemMVC.Services.IApiService, RecruitmentsystemMVC.Services.ApiService>();
+builder.Services.AddScoped<AuthService>(sp => 
+    new AuthService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<UserService>(sp => 
+    new UserService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<JobService>(sp => 
+    new JobService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<ApplicationService>(sp => 
+    new ApplicationService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<InterviewService>(sp => 
+    new InterviewService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<CompanyService>(sp => 
+    new CompanyService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<RoleService>(sp => 
+    new RoleService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<InterviewRoundService>(sp => 
+    new InterviewRoundService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<CandidateService>(sp => 
+    new CandidateService(sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"), sp.GetRequiredService<IHttpContextAccessor>()));
+builder.Services.AddScoped<RecruitmentsystemMVC.Helpers.RoleHelper>();
 
-// 🔐 Add Session
+// 🛠 Generic HttpClient for DI
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("RecruitmentAPI"));
+
+// 🔐 Session Configuration
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.IdleTimeout = TimeSpan.FromHours(2);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -34,6 +55,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+app.UseStatusCodePagesWithReExecute("/Home/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -45,14 +67,9 @@ app.UseSession();
 
 app.UseAuthorization();
 
-// 🚀 Area Routing
-app.MapControllerRoute(
-    name: "areas",
-    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
-
+// 🚀 Default Routing (No Areas)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
-

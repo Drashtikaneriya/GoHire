@@ -14,4 +14,10 @@
     <Folder Include="Areas\HR\Views\JobPositions\" />
   </ItemGroup>
 
+
+
+  <Target Name="AutoKillProcess" BeforeTargets="PrepareForBuild">
+    <Exec Command="taskkill /F /IM RecruitmentsystemMVC.exe /T /FI &quot;MEMUSAGE gt 1&quot;" IgnoreExitCode="true" />
+  </Target>
+
 </Project>

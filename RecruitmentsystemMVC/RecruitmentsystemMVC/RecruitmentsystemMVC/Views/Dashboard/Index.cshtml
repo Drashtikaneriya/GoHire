@@ -1,0 +1,458 @@
+@inject RecruitmentsystemMVC.Helpers.RoleHelper RoleHelper
+@{
+    ViewData["Title"] = "Executive Dashboard";
+    var currentUserName = Context.Session.GetString("UserName") ?? "User";
+    var roleName = Context.Session.GetString("UserRole") ?? "User";
+}
+
+<div class="dashboard-header mb-5">
+    <div class="row align-items-center">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-custom">
+                    <li class="breadcrumb-item"><a href="#">GoHire</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+            <h2 class="fw-extra-bold tracking-tight mb-1">Welcome back, <span class="text-gradient">@currentUserName</span> 👋</h2>
+            <p class="text-secondary-premium">Here's what's happening with your recruitment pipeline today.</p>
+        </div>
+        <div class="col-auto">
+            <div class="date-display shadow-sm">
+                <i class="bi bi-calendar3 me-2 text-primary"></i>
+                <span>@DateTime.Now.ToString("dddd, MMM dd, yyyy")</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --premium-blue: #5541D7;
+        --premium-green: #10b981;
+        --premium-orange: #f59e0b;
+        --premium-purple: #8b5cf6;
+        --bg-glass: rgba(255, 255, 255, 0.7);
+    }
+
+    .fw-extra-bold { font-weight: 800; }
+    .tracking-tight { letter-spacing: -0.025em; }
+    .text-gradient { background: linear-gradient(135deg, #5541D7 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-secondary-premium { color: #64748b; font-size: 0.95rem; font-weight: 500; }
+
+    .breadcrumb-custom .breadcrumb-item + .breadcrumb-item::before { content: "•"; color: #cbd5e1; }
+    .date-display { background: white; padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 600; font-size: 0.85rem; color: #1e293b; border: 1px solid #e2e8f0; }
+
+    .stat-card-premium {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1px solid #f1f5f9;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .stat-card-premium:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+        border-color: #e2e8f0;
+    }
+    .stat-card-premium::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, transparent 0%, rgba(85, 65, 215, 0.03) 100%);
+        transform: rotate(45deg);
+        z-index: 0;
+    }
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+        z-index: 1;
+        position: relative;
+    }
+    .stat-val { font-size: 1.8rem; font-weight: 800; color: #1e293b; line-height: 1.1; margin-bottom: 0.2rem; position: relative; z-index: 1; }
+    .stat-name { font-size: 0.8rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; position: relative; z-index: 1; }
+
+    .premium-table thead th {
+        background: #f8fafc;
+        border: none;
+        padding: 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .premium-table tbody td { padding: 1.25rem 1rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .activity-row:hover { background: #fdfdfd; }
+    
+    .status-badge { padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.75rem; }
+    .status-applied { background: #eff6ff; color: #3b82f6; }
+    .status-shortlisted { background: #ecfdf5; color: #10b981; }
+    .status-pending { background: #fffbeb; color: #f59e0b; }
+
+    .chart-container-premium { min-height: 350px; position: relative; }
+    .quick-link {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: white;
+        border-radius: 14px;
+        text-decoration: none;
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid #f1f5f9;
+        transition: all 0.2s;
+    }
+    .quick-link:hover { background: #f8fafc; transform: translateX(5px); color: var(--premium-blue); border-color: #5541D7; }
+</style>
+
+@if (RoleHelper.IsAdmin())
+{
+    <!-- Stats Grid -->
+    <div class="row g-4 mb-5">
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "User")'">
+                <div class="icon-box" style="background: #eff6ff; color: #3b82f6;"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalUsers</div>
+                <div class="stat-name">System Users</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Company")'">
+                <div class="icon-box" style="background: #f0fdf4; color: #10b981;"><i class="bi bi-building-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalCompanies</div>
+                <div class="stat-name">Partner Companies</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Job")'">
+                <div class="icon-box" style="background: #fffbeb; color: #f59e0b;"><i class="bi bi-briefcase-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalJobs</div>
+                <div class="stat-name">Active Jobs</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Application")'">
+                <div class="icon-box" style="background: #fef2f2; color: #ef4444;"><i class="bi bi-file-earmark-person-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalApplications</div>
+                <div class="stat-name">Total Applications</div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium">
+                <div class="icon-box" style="background: #fdf2ff; color: #d946ef;"><i class="bi bi-person-check-fill"></i></div>
+                <div class="stat-val">@ViewBag.CandidateCount</div>
+                <div class="stat-name">Talent Profiles</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium">
+                <div class="icon-box" style="background: #fff7ed; color: #f97316;"><i class="bi bi-eye-fill"></i></div>
+                <div class="stat-val">@ViewBag.PendingReview</div>
+                <div class="stat-name">Pending Review</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Interview")'">
+                <div class="icon-box" style="background: #f5f3ff; color: #8b5cf6;"><i class="bi bi-mic-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalInterviews</div>
+                <div class="stat-name">Total Interviews</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="stat-card-premium">
+                <div class="icon-box" style="background: #ecfeff; color: #06b6d4;"><i class="bi bi-alarm-fill"></i></div>
+                <div class="stat-val">@ViewBag.UpcomingInterviewsCount</div>
+                <div class="stat-name">Upcoming Sessions</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <!-- Chart Section -->
+        <div class="col-xl-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold tracking-tight mb-0">Hiring Trends</h5>
+                    <select class="form-select form-select-sm w-auto border-0 bg-light fw-bold text-muted" style="font-size: 0.75rem;">
+                        <option>Last 30 Days</option>
+                        <option>Last 90 Days</option>
+                    </select>
+                </div>
+                <div class="chart-container-premium">
+                    <canvas id="trendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions & Updates -->
+        <div class="col-xl-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                <h6 class="fw-bold mb-3 text-muted small text-uppercase tracking-widest">Global Actions</h6>
+                <div class="quick-actions">
+                    <a asp-controller="User" asp-action="Create" class="quick-link border-start border-4" style="border-left-color: #3b82f6 !important;">
+                        <i class="bi bi-person-plus me-3 text-primary fs-5"></i> Create System User
+                    </a>
+                    <a asp-controller="Job" asp-action="Create" class="quick-link border-start border-4" style="border-left-color: #10b981 !important;">
+                        <i class="bi bi-briefcase me-3 text-success fs-5"></i> Post Fresh Requirement
+                    </a>
+                    <a asp-controller="Interview" asp-action="Schedule" class="quick-link border-start border-4" style="border-left-color: #f59e0b !important;">
+                        <i class="bi bi-calendar-check me-3 text-warning fs-5"></i> Schedule Assessment
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Highlights -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 overflow-hidden" style="max-height: 240px;">
+                <h6 class="fw-bold mb-3 text-muted small text-uppercase tracking-widest">Next Interviews</h6>
+                <div class="next-interviews">
+                    @if (ViewBag.UpcomingInterviewsList != null)
+                    {
+                        @foreach (var inv in (List<InterviewDTO>)ViewBag.UpcomingInterviewsList)
+                        {
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="rounded-3 bg-light p-2 me-3 text-center" style="min-width: 50px;">
+                                    <div class="fw-bold text-dark small" style="line-height: 1;">@inv.InterviewDate.ToString("dd")</div>
+                                    <div class="text-muted" style="font-size: 0.6rem; text-transform: uppercase;">@inv.InterviewDate.ToString("MMM")</div>
+                                </div>
+                                <div class="overflow-hidden">
+                                    <div class="fw-bold text-dark small text-truncate">@inv.CandidateName</div>
+                                    <div class="text-muted" style="font-size: 0.7rem;">@inv.InterviewerName - @inv.RoundName</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Applications Table -->
+    <div class="card border-0 shadow-sm rounded-4 p-0 overflow-hidden">
+        <div class="px-4 py-3 border-bottom d-flex justify-content-between align-items-center bg-white">
+            <h5 class="fw-bold mb-0">Recent Candidate Pulse</h5>
+            <a asp-controller="Application" asp-action="Index" class="btn btn-link text-primary fw-bold text-decoration-none small">View All <i class="bi bi-arrow-right ms-1"></i></a>
+        </div>
+        <div class="table-responsive">
+            <table class="table premium-table mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Candidate Name</th>
+                        <th>Applied For</th>
+                        <th>Date Applied</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.RecentApplications != null)
+                    {
+                        @foreach (var app in (List<ApplicationDTO>)ViewBag.RecentApplications)
+                        {
+                            <tr class="activity-row">
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3 border rounded-circle bg-light d-flex align-items-center justify-content-center text-muted fw-bold" style="width: 32px; height: 32px; font-size: 0.7rem;">@app.CandidateName.Substring(0,1)</div>
+                                        <span class="fw-bold text-dark small">@app.CandidateName</span>
+                                    </div>
+                                </td>
+                                <td class="small fw-medium">@app.JobTitle</td>
+                                <td class="small text-muted">@app.AppliedDate.ToString("MMM dd, yyyy")</td>
+                                <td>
+                                    <span class="status-badge @(app.Status == "Shortlisted" ? "status-shortlisted" : "status-applied")">
+                                        @app.Status
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-controller="Application" asp-action="Details" asp-route-id="@app.Id" class="btn btn-sm btn-light rounded-2 px-3 py-1">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else if (RoleHelper.IsHR())
+{
+    @* Existing HR Dashboard logic but refined *@
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Job")'">
+                <div class="icon-box" style="background: #eff6ff; color: #3b82f6;"><i class="bi bi-briefcase-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalJobs</div>
+                <div class="stat-name">Active Postings</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Application")'">
+                <div class="icon-box" style="background: #fff7ed; color: #f97316;"><i class="bi bi-file-earmark-person"></i></div>
+                <div class="stat-val">@ViewBag.TotalApplications</div>
+                <div class="stat-name">New Applications</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Interview")'">
+                <div class="icon-box" style="background: #f0fdf4; color: #10b981;"><i class="bi bi-calendar-event-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalInterviews</div>
+                <div class="stat-name">Total Interviews</div>
+            </div>
+        </div>
+    </div>
+}
+else if (RoleHelper.IsInterviewer())
+{
+    <div class="row g-4 mb-5">
+        <div class="col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Interview")'">
+                <div class="icon-box" style="background: #eff6ff; color: #3b82f6;"><i class="bi bi-mic-fill"></i></div>
+                <div class="stat-val">@ViewBag.TotalInterviews</div>
+                <div class="stat-name">My Total Interviews</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Index", "Interview")'">
+                <div class="icon-box" style="background: #ecfeff; color: #06b6d4;"><i class="bi bi-alarm-fill"></i></div>
+                <div class="stat-val">@ViewBag.UpcomingInterviewsCount</div>
+                <div class="stat-name">My Upcoming Sessions</div>
+            </div>
+        </div>
+    </div>
+}
+else if (RoleHelper.IsCandidate())
+{
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Browse", "Job")'">
+                <div class="icon-box" style="background: #eff6ff; color: #3b82f6;"><i class="bi bi-search"></i></div>
+                <div class="stat-val"><i class="bi bi-briefcase"></i></div>
+                <div class="stat-name">Browse Jobs</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("MyApplications", "Application")'">
+                <div class="icon-box" style="background: #fff7ed; color: #f97316;"><i class="bi bi-journal-text"></i></div>
+                <div class="stat-val">@ViewBag.TotalMyApplications</div>
+                <div class="stat-name">Applications</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("MyInterviews", "Interview")'">
+                <div class="icon-box" style="background: #f5f3ff; color: #8b5cf6;"><i class="bi bi-calendar-event"></i></div>
+                <div class="stat-val">@ViewBag.UpcomingInterviewsCount</div>
+                <div class="stat-name">Upcoming Interviews</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card-premium" onclick="location.href='@Url.Action("Profile", "Candidate")'">
+                <div class="icon-box" style="background: #f0fdf4; color: #10b981;"><i class="bi bi-person-circle"></i></div>
+                <div class="stat-val"><i class="bi bi-pencil-square"></i></div>
+                <div class="stat-name">My Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h6 class="fw-bold mb-4 d-flex align-items-center"><i class="bi bi-alarm-fill me-2 text-primary"></i>Next In Line</h6>
+                @if (ViewBag.MyInterviewsList != null && ((List<RecruitmentsystemMVC.Models.DTOs.InterviewDTO>)ViewBag.MyInterviewsList).Any())
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var inv in (List<RecruitmentsystemMVC.Models.DTOs.InterviewDTO>)ViewBag.MyInterviewsList)
+                        {
+                            <div class="list-group-item bg-transparent px-0 py-3 border-bottom d-flex align-items-center">
+                                <div class="date-box text-center me-3 p-2 rounded-3 bg-light" style="min-width: 60px;">
+                                    <div class="fw-bold fs-5">@inv.InterviewDate.ToString("dd")</div>
+                                    <div class="small text-muted text-uppercase">@inv.InterviewDate.ToString("MMM")</div>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">@inv.JobTitle</h6>
+                                    <div class="text-muted small">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary me-2">@inv.RoundName</span>
+                                        <span><i class="bi bi-clock me-1"></i> @inv.InterviewDate.ToString("hh:mm tt")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="mt-3">
+                        <a asp-controller="Interview" asp-action="MyInterviews" class="btn btn-sm btn-link p-0 text-decoration-none fw-bold">View Full Schedule <i class="bi bi-arrow-right ms-1"></i></a>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4 bg-light rounded-4">
+                        <i class="bi bi-calendar-x fs-2 text-muted opacity-25 d-block mb-2"></i>
+                        <p class="text-muted small mb-0">No upcoming interviews scheduled.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        @if (RoleHelper.IsAdmin())
+        {
+            <text>
+            const ctxTrends = document.getElementById('trendsChart').getContext('2d');
+            
+            // Create Gradient
+            const gradientStroke = ctxTrends.createLinearGradient(0, 230, 0, 50);
+            gradientStroke.addColorStop(1, 'rgba(85, 65, 215, 0.2)');
+            gradientStroke.addColorStop(0, 'rgba(85, 65, 215, 0)');
+
+            new Chart(ctxTrends, {
+                type: 'line',
+                data: {
+                    labels: ['Users', 'Companies', 'Active Jobs', 'Applications', 'Talent', 'Interviews'],
+                    datasets: [{
+                        label: 'System Metrics',
+                        data: [@ViewBag.TotalUsers, @ViewBag.TotalCompanies, @ViewBag.TotalJobs, @ViewBag.TotalApplications, @ViewBag.CandidateCount, @ViewBag.TotalInterviews],
+                        backgroundColor: gradientStroke,
+                        borderColor: '#5541D7',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#5541D7',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#5541D7',
+                        pointHoverBorderColor: '#fff',
+                        pointHoverBorderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { borderDash: [5, 5], color: '#f1f5f9' }, clicks: { font: { weight: '600' } } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+            </text>
+        }
+    </script>
+}

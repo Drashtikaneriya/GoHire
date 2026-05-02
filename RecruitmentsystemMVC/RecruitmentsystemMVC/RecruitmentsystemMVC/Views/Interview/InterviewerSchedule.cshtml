@@ -1,0 +1,102 @@
+@model List<RecruitmentsystemMVC.Models.DTOs.InterviewDTO>
+@{
+    ViewData["Title"] = "My Interview Schedule";
+}
+
+<div class="card p-4">
+    <div class="mb-4">
+        <h4 class="fw-bold mb-0">Assigned Interviews</h4>
+        <p class="text-muted">Manage your upcoming candidate evaluations</p>
+    </div>
+
+    <div class="table-responsive">
+        <table id="interviewTable" class="table table-hover w-100">
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Date & Time</th>
+                    <th>Job Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var inv in Model)
+                {
+                    <tr>
+                        <td class="fw-medium">@inv.CandidateName</td>
+                        <td>@inv.InterviewDate.ToString("MMM dd, yyyy HH:mm")</td>
+                        <td>@inv.JobTitle</td>
+                        <td>
+                            <span class="badge @(inv.Status == "Completed" ? "bg-success" : "bg-warning text-dark")">@inv.Status</span>
+                        </td>
+                        <td>
+                            @if (inv.Status != "Completed")
+                            {
+                                <button class="btn btn-sm btn-primary" onclick="openFeedbackModal(@inv.Id)">
+                                    <i class="bi bi-chat-left-text me-1"></i> Add Feedback
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Submit Interview Result</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <input type="hidden" name="id" id="modal_InvId">
+                    <div class="mb-3">
+                        <label class="form-label">Overall Evaluation</label>
+                        <textarea name="Feedback" class="form-control" rows="4" placeholder="Enter candidate performance details..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Final Result</label>
+                        <select name="Result" class="form-select">
+                            <option value="Passed">Recommended for Next Round</option>
+                            <option value="Rejected">Not a Fit</option>
+                            <option value="OnHold">Hold for Comparison</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit Result</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#interviewTable').DataTable();
+        });
+
+        function openFeedbackModal(id) {
+            $('#modal_InvId').val(id);
+            $('#feedbackModal').modal('show');
+        }
+
+        function submitFeedback() {
+            const id = $('#modal_InvId').val();
+            const data = $('#feedbackForm').serialize();
+            $.post('/Interview/Feedback/' + id, data, function(res) {
+                if (res.success) {
+                    Swal.fire('Submitted', 'Interview feedback recorded.', 'success').then(() => location.reload());
+                }
+            });
+        }
+    </script>
+}

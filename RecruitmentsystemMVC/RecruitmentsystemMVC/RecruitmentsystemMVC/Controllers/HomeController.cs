@@ -24,8 +24,19 @@ namespace RecruitmentsystemMVC.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("Home/Error/{statusCode?}")]
+        public IActionResult Error(int? statusCode)
         {
+            if (statusCode == 404)
+            {
+                ViewData["ErrorTitle"] = "404 - Page Not Found";
+                ViewData["ErrorMessage"] = "Sorry, the page you are looking for does not exist.";
+            }
+            else
+            {
+                ViewData["ErrorTitle"] = "An error occurred";
+                ViewData["ErrorMessage"] = "Something went wrong. Please try again later.";
+            }
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

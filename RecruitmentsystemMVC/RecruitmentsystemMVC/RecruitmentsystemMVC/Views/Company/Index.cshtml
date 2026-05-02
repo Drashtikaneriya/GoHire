@@ -1,0 +1,147 @@
+@model RecruitmentsystemMVC.Models.PaginatedList<RecruitmentsystemMVC.Models.DTOs.CompanyDTO>
+@{
+    ViewData["Title"] = "Company Settings";
+}
+
+<div class="card p-4 shadow-sm border-0 rounded-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-0">Partner Companies</h4>
+            <p class="text-muted small mb-0">Manage organizations and their job listing associations</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary d-flex align-items-center px-3 py-2 rounded-3">
+            <i class="bi bi-building-plus me-2"></i> Add Company
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4 border-0 shadow-sm" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-4 border-0 shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover w-100 align-middle">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-3 border-0 py-3 text-uppercase small fw-bold text-muted">Company Details</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Industry</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Location</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Website</th>
+                    <th class="text-end pe-3 border-0 py-3 text-uppercase small fw-bold text-muted">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top-0">
+                @foreach (var c in Model)
+                {
+                    <tr>
+                        <td class="ps-3">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-sm me-3 bg-indigo bg-opacity-10 text-indigo rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; font-weight: 600;">
+                                    <i class="bi bi-building"></i>
+                                </div>
+                                <div>
+                                    <span class="fw-bold text-dark d-block">@c.CompanyName</span>
+                                    <small class="text-muted">ID: #@c.CompanyId</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-muted small">@(string.IsNullOrWhiteSpace(c.Industry) ? "N/A" : c.Industry)</td>
+                        <td class="small">@(string.IsNullOrWhiteSpace(c.Address) ? "N/A" : c.Address)</td>
+                        <td>
+                            @if (!string.IsNullOrWhiteSpace(c.Website))
+                            {
+                                <a href="@c.Website" target="_blank" class="text-decoration-none small d-flex align-items-center">
+                                    <i class="bi bi-link-45deg me-1"></i> Visit Site
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">No Website</span>
+                            }
+                        </td>
+                        <td class="text-end pe-3">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Edit" asp-route-id="@c.CompanyId" class="btn btn-sm btn-white border shadow-sm text-primary" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <button class="btn btn-sm btn-white border shadow-sm text-danger" onclick="deleteCompany(@c.CompanyId)" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <div class="text-muted small">
+            Showing <span class="fw-bold">@Model.Count</span> partner companies
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link rounded-start-3 px-3" asp-action="Index" asp-route-page="@(Model.PageIndex - 1)">
+                        <i class="bi bi-chevron-left me-1"></i> Previous
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link px-3">@Model.PageIndex</a></li>
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link rounded-end-3 px-3" asp-action="Index" asp-route-page="@(Model.PageIndex + 1)">
+                        Next <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .btn-white { background: #fff; }
+    .btn-white:hover { background: #f8f9fa; }
+    .bg-indigo { background-color: #6366f1; }
+    .text-indigo { color: #6366f1; }
+</style>
+
+@section Scripts {
+    <script>
+        function deleteCompany(id) {
+             Swal.fire({
+                title: 'Delete Company?',
+                text: "This removal will affect associated job listings. This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6e7881',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/Company/Delete/' + id, function(res) {
+                        if (res.success) {
+                            Swal.fire({ title: 'Deleted!', text: res.message, icon: 'success', timer: 1500, showConfirmButton: false }).then(() => location.reload());
+                        } else {
+                            if (res.isHtml) {
+                                Swal.fire({ title: 'Cannot Delete!', html: res.message, icon: 'error' });
+                            } else {
+                                Swal.fire('Failed!', res.message, 'error');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

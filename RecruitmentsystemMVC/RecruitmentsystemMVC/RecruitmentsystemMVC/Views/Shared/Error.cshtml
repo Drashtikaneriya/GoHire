@@ -1,10 +1,13 @@
-﻿@model ErrorViewModel
+@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="text-center py-5">
+    <div class="display-1 text-danger mb-4"><i class="bi bi-exclamation-triangle"></i></div>
+    <h1 class="fw-bold">@(ViewData["ErrorTitle"] ?? "An Error Occurred")</h1>
+    <p class="lead text-muted">@(ViewData["ErrorMessage"] ?? "We're sorry, but something went wrong while processing your request.")</p>
+    <a href="/" class="btn btn-primary mt-3 px-4">Return Home</a>
+</div>
 
 @if (Model.ShowRequestId)
 {

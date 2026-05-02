@@ -1,0 +1,68 @@
+@model RecruitmentsystemMVC.Models.DTOs.UserDTO
+@{
+    ViewData["Title"] = "User Account Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card p-4 shadow-sm border-0 rounded-4">
+            <div class="text-center mb-4">
+                <div class="avatar-xl bg-primary-soft text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem; font-weight: 700;">
+                    @((Model.FullName?.Length >= 1) ? Model.FullName.Substring(0, 1).ToUpper() : "U")
+                </div>
+                <h4 class="fw-bold mb-1">@Model.FullName</h4>
+                <p class="text-muted small">System @Model.Role</p>
+            </div>
+
+            <div class="row g-4 border-top pt-4">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label class="text-muted small d-block mb-1">Email Address</label>
+                        <span class="fw-medium">@Model.Email</span>
+                    </div>
+                </div>
+                 <div class="col-md-6">
+                    <div class="mb-4">
+                        <label class="text-muted small d-block mb-1">Phone Number</label>
+                        <span class="fw-medium">@Model.Phone</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                 <div class="col-md-6">
+                    <div class="mb-4">
+                        <label class="text-muted small d-block mb-1">Account Role</label>
+                        <span class="badge rounded-pill bg-light text-dark border px-3">@Model.Role</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="my-4 opacity-50">
+            
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-link text-muted p-0 text-decoration-none"><i class="bi bi-arrow-left me-1"></i> Back to Users</a>
+                <div class="d-flex gap-2">
+
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm px-4 rounded-3">Edit User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-primary-soft { background-color: #f0f4ff; color: #5541D7; }
+</style>
+
+@section Scripts {
+    <script>
+        function toggleStatus(id) {
+            $.post('/User/ToggleStatus/' + id, function(res) {
+                if (res.success) location.reload();
+                else Swal.fire('Error', res.message, 'error');
+            });
+        }
+    </script>
+}

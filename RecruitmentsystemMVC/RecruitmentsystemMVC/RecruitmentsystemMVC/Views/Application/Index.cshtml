@@ -1,0 +1,167 @@
+@model RecruitmentsystemMVC.Models.PaginatedList<RecruitmentsystemMVC.Models.DTOs.ApplicationDTO>
+@{
+    ViewData["Title"] = "Applications Management";
+}
+
+<div class="card p-4 shadow-sm border-0 rounded-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="fw-bold mb-0">Candidate Applications</h4>
+            <p class="text-muted small mb-0">Review and manage recruitment workflow</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary d-flex align-items-center px-3 py-2 rounded-3">
+            <i class="bi bi-plus-circle me-2"></i> New Application
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover w-100 align-middle">
+            <thead class="bg-light">
+                <tr>
+                    <th class="ps-3 border-0 py-3 text-uppercase small fw-bold text-muted">Candidate</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Job Opportunity</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Date Applied</th>
+                    <th class="border-0 py-3 text-uppercase small fw-bold text-muted">Status</th>
+                    <th class="text-end pe-3 border-0 py-3 text-uppercase small fw-bold text-muted">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="border-top-0">
+                @foreach (var app in Model)
+                {
+                    <tr>
+                        <td class="ps-3">
+                            <div class="fw-bold text-dark">@app.CandidateName</div>
+                            <div class="text-muted small">@app.CandidateEmail</div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded p-1 me-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                    <i class="bi bi-briefcase small"></i>
+                                </div>
+                                <span class="fw-medium small">@app.JobTitle</span>
+                            </div>
+                        </td>
+                        <td class="text-muted small">@app.AppliedDate.ToString("MMM dd, yyyy")</td>
+                        <td>
+                            @if (app.Status == "Shortlisted")
+                            {
+                                <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-3 py-1 rounded-pill small">Shortlisted</span>
+                            }
+                            else if (app.Status == "Rejected")
+                            {
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-1 rounded-pill small">Rejected</span>
+                            }
+                            else if (app.Status == "Applied" || app.Status == "Pending" || app.Status == "Submitted")
+                            {
+                                <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-1 rounded-pill small">Pending</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-1 rounded-pill small">@app.Status</span>
+                            }
+                        </td>
+                        <td class="text-end pe-3">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-white border shadow-sm text-primary" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                <button class="btn btn-sm btn-white border shadow-sm text-danger" onclick="deleteApp(@app.Id)" title="Delete"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <div class="text-muted small">
+            Displaying <span class="fw-bold">@Model.Count</span> total applications
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link rounded-start-3 px-3" asp-action="Index" asp-route-page="@(Model.PageIndex - 1)">
+                        <i class="bi bi-chevron-left me-1"></i> Previous
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link px-3">@Model.PageIndex</a></li>
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link rounded-end-3 px-3" asp-action="Index" asp-route-page="@(Model.PageIndex + 1)">
+                        Next <i class="bi bi-chevron-right ms-1"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .btn-white { background: #fff; }
+    .btn-white:hover { background: #f8f9fa; }
+</style>
+
+@section Scripts {
+    <script>
+        function shortlist(id) {
+            $.post('/Application/Shortlist/' + id, function(res) {
+                if (res.success) {
+                    Swal.fire({ title: 'Shortlisted!', text: 'Candidate moved to shortlist.', icon: 'success', timer: 1000, showConfirmButton: false }).then(() => location.reload());
+                } else {
+                    Swal.fire('Error', 'Failed to shortlist candidate.', 'error');
+                }
+            });
+        }
+
+        function reject(id) {
+            Swal.fire({
+                title: 'Reject Application?',
+                text: "The candidate will be notified of the rejection.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6e7881',
+                confirmButtonText: 'Yes, reject'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/Application/Reject/' + id, function(res) {
+                        if (res.success) {
+                            Swal.fire({ title: 'Rejected', text: 'Application has been rejected.', icon: 'success', timer: 1000, showConfirmButton: false }).then(() => location.reload());
+                        } else {
+                            Swal.fire('Error', 'Failed to reject application.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+
+        function deleteApp(id) {
+            Swal.fire({
+                title: 'Delete Application?',
+                text: "This will permanently remove the application record.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6e7881',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/Application/Delete/' + id, function(res) {
+                        if (res.success) {
+                            Swal.fire({ title: 'Deleted!', text: res.message || 'Record removed successfully.', icon: 'success', timer: 1000, showConfirmButton: false }).then(() => location.reload());
+                        } else {
+                            Swal.fire('Failed!', res.message || 'Could not remove application.', 'error');
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

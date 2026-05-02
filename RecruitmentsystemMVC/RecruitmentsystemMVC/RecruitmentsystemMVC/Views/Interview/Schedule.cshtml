@@ -1,0 +1,97 @@
+@model RecruitmentsystemMVC.Models.DTOs.ScheduleInterviewDTO
+@{
+    ViewData["Title"] = "Schedule Interview";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4 shadow-sm border-0 rounded-4">
+            <h4 class="fw-bold mb-4">Set Up New Interview</h4>
+            
+            <form id="scheduleForm">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                         <label class="form-label text-muted small fw-bold">Select Application</label>
+                         <select asp-for="ApplicationId" class="form-select rounded-3 py-2 shadow-none border-light-subtle" required>
+                             <option value="">-- Choose Candidate Application --</option>
+                             @foreach (var app in ViewBag.Applications)
+                             {
+                                 <option value="@app.Id">@app.CandidateName - @app.JobTitle (@app.Status)</option>
+                             }
+                         </select>
+                         <span asp-validation-for="ApplicationId" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small fw-bold">Select Interviewer</label>
+                         <select asp-for="InterviewerUserId" class="form-select rounded-3 py-2 shadow-none border-light-subtle" required>
+                             <option value="">-- Choose Interviewer --</option>
+                             @foreach (var inv in ViewBag.Interviewers)
+                             {
+                                 <option value="@inv.Id">@inv.FullName (@inv.Role)</option>
+                             }
+                         </select>
+                         <span asp-validation-for="InterviewerUserId" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small fw-bold">Select Round</label>
+                         <select asp-for="RoundId" class="form-select rounded-3 py-2 shadow-none border-light-subtle" required>
+                             <option value="">-- Choose Stage --</option>
+                             @foreach (var round in ViewBag.Rounds)
+                             {
+                                 <option value="@round.Id">@round.Name</option>
+                             }
+                         </select>
+                         <span asp-validation-for="RoundId" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small fw-bold">Interview Date & Time</label>
+                        <input asp-for="InterviewDate" type="datetime-local" class="form-control rounded-3 py-2 shadow-none border-light-subtle" required />
+                        <span asp-validation-for="InterviewDate" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small fw-bold">Interview Mode</label>
+                        <select asp-for="Mode" class="form-select rounded-3 py-2 shadow-none border-light-subtle" required>
+                            <option value="Online">Online (Zoom/Meet)</option>
+                            <option value="Offline">Offline (Office)</option>
+                            <option value="Phone">Phone Call</option>
+                        </select>
+                        <span asp-validation-for="Mode" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a asp-action="Index" class="btn btn-light px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-5">Schedule Session</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#scheduleForm').submit(function(e) {
+            e.preventDefault();
+            const data = $(this).serialize();
+            
+            $.post('/Interview/Schedule', data, function(res) {
+                if (res.success) {
+                    Swal.fire({ 
+                        title: 'Scheduled!', 
+                        text: 'The interview has been successfully scheduled.', 
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6'
+                    }).then(() => window.location.href = '/Interview');
+                } else {
+                    Swal.fire('Error', res.message || 'Failed to schedule interview.', 'error');
+                }
+            });
+        });
+    </script>
+}
